@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CHAKRAVYUH v4.0 — Tactical Red Team Cyber Operations Platform</title>
-  <meta name="description" content="Cinematic, AI-Powered Red Team Adversarial Simulation Platform & Architecture Explorer.">
+  <title>CHAKRAVYUH v4.0 — Red Team Cyber Range & Attack Simulation Platform</title>
+  <meta name="description" content="AI-Powered Red Team Simulation Platform & Master Handbook v4.0. Features deep attack mechanics from redteam-nine.vercel.app for Windows VM compromise simulations.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Mermaid.js for Diagrams -->
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <!-- Fonts -->
+  <!-- Google Fonts: Inter, IBM Plex Mono & Share Tech Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Share+Tech+Mono&family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -23,31 +23,26 @@
         extend: {
           fontFamily: {
             sans: ['Inter', 'sans-serif'],
-            mono: ['Fira Code', 'monospace'],
+            mono: ['IBM Plex Mono', 'monospace'],
             tech: ['Share Tech Mono', 'monospace'],
           },
           colors: {
-            cyber: {
-              black: '#04070e',
-              dark: '#080d18',
-              surface: '#0d1527',
-              border: '#17233d',
-              red: '#ff0055',
-              crimson: '#f43f5e',
+            val: {
+              red: '#FF4655',
+              darkRed: '#CC3744',
+              bg: '#04070e',
+              surface: '#0a101d',
+              card: '#0f172a',
+              border: '#1e293b',
               cyan: '#00f3ff',
-              neon: '#22d3ee',
               green: '#00ff88',
-              emerald: '#10b981',
               amber: '#f59e0b',
-              violet: '#a855f7',
             }
           },
           animation: {
-            'pulse-fast': 'pulse 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             'radar': 'radarSweep 3s linear infinite',
             'laser': 'laserScan 3s ease-in-out infinite',
-            'glitch': 'glitch 2s infinite',
-            'node-pulse': 'nodeGlow 1.5s infinite alternate',
+            'pulse-fast': 'pulse 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
           },
           keyframes: {
             radarSweep: {
@@ -57,10 +52,6 @@
             laserScan: {
               '0%, 100%': { top: '0%' },
               '50%': { top: '100%' },
-            },
-            nodeGlow: {
-              '0%': { filter: 'drop-shadow(0 0 4px #00f3ff)' },
-              '100%': { filter: 'drop-shadow(0 0 16px #ff0055)' },
             }
           }
         }
@@ -76,33 +67,33 @@
       overflow-x: hidden;
     }
     .font-tech { font-family: 'Share Tech Mono', monospace; }
-    pre, code { font-family: 'Fira Code', monospace; }
+    .font-mono-tech { font-family: 'IBM Plex Mono', monospace; }
 
-    /* Tactical Scanlines */
+    /* Scanlines */
     .scanlines {
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 70, 85, 0.03), rgba(0, 243, 255, 0.02), rgba(0, 255, 136, 0.02));
       background-size: 100% 3px, 6px 100%;
       pointer-events: none;
     }
 
-    /* Grid background */
+    /* Cyber grid */
     .cyber-grid {
       background-image: 
-        linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
-      background-size: 40px 40px;
+        linear-gradient(to right, rgba(0, 243, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 243, 255, 0.04) 1px, transparent 1px);
+      background-size: 36px 36px;
     }
 
-    /* Glowing borders */
-    .glow-red { box-shadow: 0 0 35px -5px rgba(255, 0, 85, 0.45); }
-    .glow-cyan { box-shadow: 0 0 35px -5px rgba(0, 243, 255, 0.35); }
-    .glow-green { box-shadow: 0 0 35px -5px rgba(0, 255, 136, 0.35); }
+    /* Glows */
+    .glow-red { box-shadow: 0 0 30px -5px rgba(255, 70, 85, 0.4); }
+    .glow-cyan { box-shadow: 0 0 30px -5px rgba(0, 243, 255, 0.35); }
+    .glow-green { box-shadow: 0 0 30px -5px rgba(0, 255, 136, 0.35); }
 
     /* Custom scrollbar */
     ::-webkit-scrollbar { width: 7px; height: 7px; }
     ::-webkit-scrollbar-track { background: #04070e; }
-    ::-webkit-scrollbar-thumb { background: #17233d; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #ff0055; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #FF4655; }
 
     /* Radar sweep */
     .radar-beam {
@@ -110,502 +101,588 @@
     }
   </style>
 </head>
-<body class="bg-[#04070e] text-slate-100 antialiased selection:bg-rose-600 selection:text-white">
+<body class="bg-[#04070e] text-slate-100 antialiased selection:bg-[#FF4655] selection:text-white">
 
   <!-- TOP PROGRESS BAR -->
-  <div id="scrollProgressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-rose-500 via-cyan-400 to-emerald-400 z-50 w-0 transition-all duration-150"></div>
+  <div id="scrollProgressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-[#FF4655] via-cyan-400 to-emerald-400 z-50 w-0 transition-all duration-150"></div>
 
-  <!-- HUD STATUS BAR -->
-  <div class="bg-black/95 border-b border-slate-800 text-[11px] font-tech py-1 px-4 sticky top-0 z-40 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-slate-400">
-      <div class="flex items-center gap-3">
-        <span class="flex items-center gap-1.5 text-rose-500 font-bold tracking-wider">
-          <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
-          [RED_TEAM_TACTICAL_MODE]
+  <!-- COMPANION LIVE LAB EXTERNAL BANNER (FEATURED HIGHLIGHT) -->
+  <div class="bg-gradient-to-r from-[#FF4655]/20 via-[#0a101d] to-cyan-500/20 border-b border-[#FF4655]/40 py-2 px-4 sticky top-0 z-40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-mono-tech">
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded bg-[#FF4655] text-white font-bold text-[10px] uppercase tracking-wider animate-pulse">
+          LIVE LAB ONLINE
         </span>
-        <span class="text-slate-600">|</span>
-        <span class="hidden sm:inline text-slate-300">LAB RANGE: <span class="text-cyan-400">192.168.56.0/24 (ISOLATED)</span></span>
-        <span class="text-slate-600 hidden sm:inline">|</span>
-        <span class="hidden sm:inline">GATEWAY: <span class="text-emerald-400">ARMED (STRICT)</span></span>
+        <span class="text-slate-300">
+          Windows VM Compromise Simulation Lab: 
+          <a href="https://redteam-nine.vercel.app/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline font-bold">
+            redteam-nine.vercel.app ↗
+          </a>
+        </span>
       </div>
 
       <div class="flex items-center gap-3">
-        <!-- Voice Assistant Toggle -->
-        <button onclick="toggleVoice()" id="voiceToggleBtn" class="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-700 hover:text-cyan-400 transition" title="Voice Synthesized Mission Briefing">
-          <span id="voiceIcon">🗣️</span> VOICE INTEL: <span id="voiceState">OFF</span>
+        <!-- Audio & Voice Toggles -->
+        <button onclick="toggleVoice()" id="voiceToggleBtn" class="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-700 hover:text-cyan-400 transition">
+          <span id="voiceIcon">🗣️</span> VOICE: <span id="voiceState">OFF</span>
         </button>
-        <!-- Sound FX Toggle -->
-        <button onclick="toggleAudio()" id="audioToggleBtn" class="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-700 hover:text-rose-400 transition" title="Tactical Audio Feedback">
-          <span id="audioIcon">🔊</span> SOUND FX: <span id="audioState">ON</span>
+        <button onclick="toggleAudio()" id="audioToggleBtn" class="flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-slate-900 border border-slate-700 hover:text-[#FF4655] transition">
+          <span id="audioIcon">🔊</span> SFX: <span id="audioState">ON</span>
         </button>
-        <span class="text-slate-600">|</span>
-        <span class="text-rose-400 font-bold">CHAKRAVYUH v4.0</span>
+        <a href="https://redteam-nine.vercel.app/" target="_blank" rel="noopener noreferrer" 
+           class="px-2.5 py-1 rounded bg-[#FF4655] hover:bg-[#CC3744] text-white font-bold text-[10px] uppercase tracking-wider transition shadow-sm flex items-center gap-1">
+          <span>Open Vercel Lab ↗</span>
+        </a>
       </div>
     </div>
   </div>
 
   <!-- NAVIGATION HEADER -->
-  <header class="bg-[#080d18]/90 backdrop-blur-md border-b border-slate-800">
+  <header class="bg-[#0a101d]/90 backdrop-blur-md border-b border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 via-cyan-500 to-indigo-600 p-[2px] shadow-lg shadow-rose-500/20">
-          <div class="w-full h-full bg-[#04070e] rounded-[10px] flex items-center justify-center font-black text-rose-500 text-lg">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF4655] via-cyan-400 to-indigo-600 p-[2px] shadow-lg shadow-[#FF4655]/20">
+          <div class="w-full h-full bg-[#04070e] rounded-[10px] flex items-center justify-center font-black text-[#FF4655] text-lg">
             ⚔
           </div>
         </div>
         <div>
           <span class="font-black text-xl tracking-wider text-white">CHAKRAVYUH</span>
-          <span class="ml-2 text-[10px] font-mono px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800">RED TEAM PLATFORM</span>
+          <span class="ml-2 text-[10px] font-mono-tech px-2 py-0.5 rounded bg-[#FF4655]/20 text-[#FF4655] border border-[#FF4655]/40">v4.0 ATTACK LAB</span>
         </div>
       </div>
 
       <div class="flex items-center gap-2 sm:gap-3">
-        <a href="#mission-briefing" class="px-3 py-1.5 rounded-lg text-xs font-bold font-mono bg-rose-600 hover:bg-rose-500 text-white transition shadow-lg shadow-rose-600/30 flex items-center gap-1.5">
+        <a href="#attack-mechanics" class="px-3 py-1.5 rounded-lg text-xs font-bold font-mono-tech bg-[#FF4655] hover:bg-[#CC3744] text-white transition shadow-lg shadow-[#FF4655]/30 flex items-center gap-1.5">
           <span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
-          <span>⚡ MISSION COCKPIT</span>
+          <span>⚡ ATTACK SIMULATORS</span>
         </a>
-        <a href="#cyber-range-map" class="hidden md:inline-flex px-3 py-1.5 rounded-lg text-xs font-medium font-mono bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
-          Range Topology
+        <a href="#agent-workflow" class="hidden md:inline-flex px-3 py-1.5 rounded-lg text-xs font-medium font-mono-tech bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+          5-Phase Agent
         </a>
-        <a href="#mitre-matrix" class="hidden md:inline-flex px-3 py-1.5 rounded-lg text-xs font-medium font-mono bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
-          MITRE Matrix
-        </a>
-        <a href="#handbook" class="px-3 py-1.5 rounded-lg text-xs font-medium font-mono bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
-          Handbook v4.0
+        <a href="#handbook" class="px-3 py-1.5 rounded-lg text-xs font-medium font-mono-tech bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
+          Handbook Specs
         </a>
       </div>
     </div>
   </header>
 
-  <!-- CINEMATIC HERO SECTION -->
-  <section class="relative border-b border-slate-800 overflow-hidden py-16 sm:py-24 cyber-grid">
+  <!-- CINEMATIC HERO & TOPOLOGY -->
+  <section class="relative border-b border-slate-800 overflow-hidden py-14 sm:py-20 cyber-grid">
     <canvas id="heroCanvas" class="absolute inset-0 pointer-events-none opacity-40"></canvas>
     <div class="absolute inset-0 scanlines"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
       
-      <!-- Top badges -->
       <div class="flex flex-wrap items-center gap-2">
-        <span class="px-3 py-1 rounded-full text-xs font-tech font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40 uppercase tracking-widest flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
-          RED TEAM ADVERSARIAL SIMULATION
+        <span class="px-3 py-1 rounded-full text-xs font-tech font-bold bg-[#FF4655]/20 text-[#FF4655] border border-[#FF4655]/40 uppercase tracking-widest flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-[#FF4655] animate-pulse"></span>
+          AUTONOMOUS RED TEAM LAB
         </span>
         <span class="px-3 py-1 rounded-full text-xs font-tech font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 uppercase tracking-widest">
-          CENTRALIZED AI PLANNER
+          TARGET: WIN-TARGET-01 (192.168.56.20)
         </span>
         <span class="px-3 py-1 rounded-full text-xs font-tech font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 uppercase tracking-widest">
-          STRICT ISOLATED RANGE
+          ATTACKER: RED-TEAM-01 (192.168.56.10)
         </span>
       </div>
 
-      <!-- Main Headline -->
-      <div class="max-w-4xl space-y-4">
-        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-none">
-          WE ARE THE WORK <br>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-cyan-400 to-emerald-400">
-            DONE BY THE RED TEAM.
+      <div class="max-w-4xl space-y-3">
+        <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
+          WINDOWS VM COMPROMISE <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4655] via-cyan-400 to-emerald-400">
+            SIMULATION & EXECUTION MATRIX
           </span>
         </h1>
-        <p class="text-slate-300 text-base sm:text-xl font-light leading-relaxed max-w-3xl">
-          CHAKRAVYUH empowers security teams to simulate real-world cyber adversaries against blue-team defenses with centralized AI reasoning and deterministic safety authorization.
+        <p class="text-slate-300 text-base sm:text-lg font-light leading-relaxed max-w-3xl">
+          Comprehensive Red Team simulation combining the <strong>CHAKRAVYUH Master Architecture v4.0</strong> with live attack engines from 
+          <a href="https://redteam-nine.vercel.app/" target="_blank" class="text-cyan-400 hover:underline font-bold">redteam-nine.vercel.app</a>: Network Saturation (DDoS), Authentication Probing, and Spear-Phishing Pretext Synthesis.
         </p>
       </div>
 
-      <!-- The Tactical Command Paradigm -->
-      <div class="p-6 rounded-2xl border border-rose-500/40 bg-[#080d18]/90 backdrop-blur-md max-w-4xl glow-red">
-        <div class="text-xs font-tech text-rose-400 uppercase tracking-widest font-bold mb-3 flex items-center justify-between">
-          <span>⚔️ ARCHITECTURAL GOVERNING RULE</span>
-          <span class="text-[10px] text-slate-400 font-mono">DETERMINISTIC PERIMETER</span>
-        </div>
-        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-center text-xs font-mono font-bold">
-          <div class="p-3 rounded-xl bg-cyan-950/80 border border-cyan-500/40 text-cyan-300">
-            <div class="text-[10px] text-slate-400 font-tech">PLANNING</div>
-            <div class="text-sm text-cyan-400 mt-0.5">AI Plans</div>
-          </div>
-          <div class="p-3 rounded-xl bg-indigo-950/80 border border-indigo-500/40 text-indigo-300">
-            <div class="text-[10px] text-slate-400 font-tech">STRUCTURE</div>
-            <div class="text-sm text-indigo-400 mt-0.5">Python Validates</div>
-          </div>
-          <div class="p-3 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-300">
-            <div class="text-[10px] text-slate-400 font-tech">AUTHORITY</div>
-            <div class="text-sm text-rose-400 mt-0.5">Gateway Authorizes</div>
-          </div>
-          <div class="p-3 rounded-xl bg-emerald-950/80 border border-emerald-500/40 text-emerald-300">
-            <div class="text-[10px] text-slate-400 font-tech">CONTROL</div>
-            <div class="text-sm text-emerald-400 mt-0.5">Adapters Execute</div>
-          </div>
-          <div class="p-3 rounded-xl bg-amber-950/80 border border-amber-500/40 text-amber-300 col-span-2 sm:col-span-1">
-            <div class="text-[10px] text-slate-400 font-tech">TELEMETRY</div>
-            <div class="text-sm text-amber-400 mt-0.5">Engine Measures</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Action Buttons -->
-      <div class="flex flex-wrap gap-3 pt-2">
-        <a href="#mission-briefing" class="px-5 py-3 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-tech font-bold text-sm tracking-wider transition shadow-lg shadow-rose-600/30 flex items-center gap-2">
-          <span>🚀 LAUNCH MISSION BRIEFING</span>
-        </a>
-        <a href="#cyber-range-map" class="px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-tech font-bold text-sm tracking-wider transition flex items-center gap-2">
-          <span>🗺️ VIEW CYBER RANGE MAP</span>
-        </a>
-        <button onclick="speakBriefing()" class="px-4 py-3 rounded-xl bg-cyan-950/60 hover:bg-cyan-900/60 text-cyan-300 border border-cyan-800 font-tech text-xs tracking-wider transition flex items-center gap-1.5">
-          <span>🗣️ SPEAK INTEL SUMMARY</span>
-        </button>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================================================================= -->
-  <!-- FEATURE 1: INTERACTIVE CYBER RANGE TOPOLOGY MAP -->
-  <!-- ================================================================= -->
-  <section id="cyber-range-map" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-    <div class="space-y-4 mb-6">
-      <div class="flex items-center gap-2">
-        <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono font-bold">RANGE VISUALIZER</span>
-        <h2 class="text-3xl font-black text-white">Isolated Virtual Lab Cyber Range</h2>
-      </div>
-      <p class="text-slate-400 text-sm">
-        Click on any machine node in the virtual test network to inspect its IP, authorized attack vectors, open ports, and allowlist verification state.
-      </p>
-    </div>
-
-    <!-- Range Map Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      
-      <!-- Interactive SVG Network Diagram -->
-      <div class="lg:col-span-2 p-6 rounded-3xl border border-slate-800 bg-[#080d18] relative overflow-hidden flex flex-col items-center justify-center min-h-[380px]">
-        <div class="absolute inset-0 cyber-grid opacity-30 pointer-events-none"></div>
-
-        <!-- SVG Topology -->
-        <svg viewBox="0 0 600 320" class="w-full max-w-2xl h-auto">
-          <!-- Connection lines -->
-          <line x1="300" y1="50" x2="100" y2="170" stroke="#1e293b" stroke-width="2" id="line-win" />
-          <line x1="300" y1="50" x2="230" y2="240" stroke="#1e293b" stroke-width="2" id="line-load" />
-          <line x1="300" y1="50" x2="370" y2="240" stroke="#1e293b" stroke-width="2" id="line-phish" />
-          <line x1="300" y1="50" x2="500" y2="170" stroke="#1e293b" stroke-width="2" id="line-wifi" />
-
-          <!-- Center Node: Kali Simulator / Gateway -->
-          <g class="cursor-pointer" onclick="inspectTarget('RED_OPS')">
-            <circle cx="300" cy="50" r="32" fill="#04070e" stroke="#ff0055" stroke-width="3" class="filter drop-shadow(0 0 10px #ff0055)" />
-            <text x="300" y="47" text-anchor="middle" fill="#ffffff" font-size="11" font-family="'Share Tech Mono'">CHAKRAVYUH</text>
-            <text x="300" y="60" text-anchor="middle" fill="#ff0055" font-size="9" font-family="monospace">RED OPS</text>
-          </g>
-
-          <!-- Node 1: Windows Lab Workstation -->
-          <g class="cursor-pointer hover:opacity-80 transition" onclick="inspectTarget('WINDOWS_LAB')">
-            <circle cx="100" cy="170" r="26" fill="#04070e" stroke="#00f3ff" stroke-width="2" id="node-win" />
-            <text x="100" y="167" text-anchor="middle" fill="#ffffff" font-size="10" font-family="'Share Tech Mono'">WINDOWS</text>
-            <text x="100" y="179" text-anchor="middle" fill="#00f3ff" font-size="8" font-family="monospace">.56.10</text>
-          </g>
-
-          <!-- Node 2: Service Load API Gateway -->
-          <g class="cursor-pointer hover:opacity-80 transition" onclick="inspectTarget('LOAD_API')">
-            <circle cx="230" cy="240" r="26" fill="#04070e" stroke="#f59e0b" stroke-width="2" id="node-load" />
-            <text x="230" y="237" text-anchor="middle" fill="#ffffff" font-size="10" font-family="'Share Tech Mono'">API SVR</text>
-            <text x="230" y="249" text-anchor="middle" fill="#f59e0b" font-size="8" font-family="monospace">.56.15</text>
-          </g>
-
-          <!-- Node 3: Synthetic Phishing Mailbox Server -->
-          <g class="cursor-pointer hover:opacity-80 transition" onclick="inspectTarget('MAIL_SIM')">
-            <circle cx="370" cy="240" r="26" fill="#04070e" stroke="#a855f7" stroke-width="2" id="node-phish" />
-            <text x="370" y="237" text-anchor="middle" fill="#ffffff" font-size="10" font-family="'Share Tech Mono'">MAIL SVR</text>
-            <text x="370" y="249" text-anchor="middle" fill="#a855f7" font-size="8" font-family="monospace">.56.25</text>
-          </g>
-
-          <!-- Node 4: Wireless 802.11 Monitor -->
-          <g class="cursor-pointer hover:opacity-80 transition" onclick="inspectTarget('WIFI_SENSOR')">
-            <circle cx="500" cy="170" r="26" fill="#04070e" stroke="#00ff88" stroke-width="2" id="node-wifi" />
-            <text x="500" y="167" text-anchor="middle" fill="#ffffff" font-size="10" font-family="'Share Tech Mono'">RF SENSOR</text>
-            <text x="500" y="179" text-anchor="middle" fill="#00ff88" font-size="8" font-family="monospace">802.11</text>
-          </g>
-        </svg>
-
-        <div class="text-[11px] font-mono text-slate-500 mt-2">
-          Click on any node above to inspect target vulnerabilities and allowlist status.
-        </div>
-      </div>
-
-      <!-- Node Inspector Card -->
-      <div id="targetInspector" class="p-6 rounded-3xl border border-cyan-500/30 bg-[#080d18] flex flex-col justify-between">
-        <div class="space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-            <div>
-              <span id="inspIp" class="text-xs font-tech text-cyan-400 font-bold uppercase">192.168.56.10 [ALLOWLISTED]</span>
-              <h3 id="inspName" class="text-xl font-bold text-white">WINDOWS-LAB-01</h3>
-            </div>
-            <span id="inspStatus" class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-700 text-[10px] font-mono font-bold">TARGET READY</span>
-          </div>
-
-          <div class="space-y-3 text-xs font-mono">
-            <div>
-              <span class="text-slate-400">Assigned Adapter:</span>
-              <div id="inspAdapter" class="text-cyan-300 font-bold">Authentication Simulation Adapter</div>
-            </div>
-            <div>
-              <span class="text-slate-400">Listening Ports:</span>
-              <div id="inspPorts" class="text-slate-200">TCP/3389 (RDP), TCP/445 (SMB), TCP/88 (Kerberos)</div>
-            </div>
-            <div>
-              <span class="text-slate-400">Security Gate Limits:</span>
-              <div id="inspLimits" class="text-amber-400 font-bold">Max 100 events / 60 seconds duration</div>
-            </div>
-            <div>
-              <span class="text-slate-400">Target Purpose:</span>
-              <p id="inspPurpose" class="text-slate-300 text-[11px] leading-relaxed">
-                Primary authorized target for testing Windows Security Event telemetry generation (IDs 4624, 4625, 4771) and verifying SIEM detection latency.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <button onclick="focusOnMission('WINDOWS-LAB-01', 'authentication')" class="w-full mt-6 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-tech font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-cyan-500/20">
-          Target In Mission Briefing ➔
-        </button>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ================================================================= -->
-  <!-- FEATURE 2: MISSION BRIEFING & REAL-TIME RED VS BLUE COCKPIT -->
-  <!-- ================================================================= -->
-  <section id="mission-briefing" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-800">
-    <div class="p-6 sm:p-8 rounded-3xl border border-rose-500/40 bg-gradient-to-b from-[#080d18] via-[#050811] to-[#04070e] shadow-2xl relative glow-red">
-      
-      <!-- Top Cockpit Header -->
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5 mb-6">
-        <div>
+      <!-- PERSISTENT TARGET VM STATE (FROM REDTEAM-NINE) -->
+      <div class="p-5 rounded-2xl border border-slate-800 bg-[#0a101d]/90 backdrop-blur-md max-w-5xl glow-red">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3 mb-3 text-xs font-tech">
           <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
-            <span class="text-xs font-tech font-bold uppercase tracking-wider text-rose-400">OP-CHAKRAVYUH // TACTICAL SIMULATION CHAMBER</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            <span class="text-white font-bold tracking-wider">PERSISTENT TARGET STATE // WIN-TARGET-01 (192.168.56.20)</span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">Live Red vs Blue Mission Terminal</h2>
-          <p class="text-xs sm:text-sm text-slate-400">Simulate adversary TTPs on the left; observe real-time SIEM blue-team detection on the right.</p>
+          <span class="text-slate-400">Session: <strong class="text-cyan-400">ACTIVE (lab-user)</strong></span>
         </div>
 
-        <!-- Emergency Kill Switch (Guarded Style) -->
-        <div class="flex items-center gap-2">
-          <button onclick="triggerEmergencyKillSwitch()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-tech font-bold text-xs uppercase tracking-widest transition shadow-lg shadow-rose-600/50 flex items-center gap-2 border border-rose-400/50">
-            <span>🛑</span>
-            <span>KILL SWITCH (SIGINT)</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Mission Parameters Form -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-black/60 border border-slate-800 mb-6">
-        
-        <div>
-          <label class="block text-xs font-tech text-rose-400 mb-1 font-bold">ADVERSARY TTP / SCENARIO</label>
-          <select id="cockpitScenario" class="w-full bg-[#080d18] border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-cyan-300 focus:outline-none focus:border-rose-400">
-            <option value="auth">T1110 - Kerberos / SMB Password Spraying</option>
-            <option value="load">T1498 - Bounded Application Layer Load</option>
-            <option value="phish">T1566 - Educational Phishing Attachment Drill</option>
-            <option value="wifi">T1040 - Synthetic Deauth & Rogue AP Spoof</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-xs font-tech text-rose-400 mb-1 font-bold">TARGET LAB HOST</label>
-          <select id="cockpitTarget" class="w-full bg-[#080d18] border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-rose-400">
-            <option value="WINDOWS-LAB-01">WINDOWS-LAB-01 (192.168.56.10)</option>
-            <option value="SERVICES-LAB-02">SERVICES-LAB-02 (192.168.56.15)</option>
-            <option value="MAIL-LAB-03">MAIL-LAB-03 (192.168.56.25)</option>
-            <option value="UNAPPROVED_WAN">198.51.100.1 (WAN Host) [REJECT TEST]</option>
-          </select>
-        </div>
-
-        <div>
-          <div class="flex justify-between text-xs font-tech mb-1">
-            <span class="text-rose-400 font-bold">BURST CEILING:</span>
-            <span id="burstDisplay" class="text-white font-mono">20 cycles</span>
+        <div class="grid grid-cols-2 sm:grid-cols-6 gap-2.5 text-center text-xs font-mono-tech">
+          <div class="p-2.5 rounded-xl bg-black/50 border border-slate-800">
+            <div class="text-[10px] text-slate-400 uppercase">CPU Load</div>
+            <div id="vmCpu" class="text-base text-cyan-400 font-bold mt-0.5">18%</div>
           </div>
-          <input type="range" id="burstSlider" min="5" max="150" value="20" step="5" oninput="document.getElementById('burstDisplay').innerText = this.value + ' cycles'"
-                 class="w-full accent-rose-500 bg-slate-800 h-2 rounded cursor-pointer">
-          <div class="flex justify-between text-[10px] text-slate-500 font-mono mt-0.5">
-            <span>5 (Low)</span>
-            <span class="text-amber-400">100 (Safety Limit)</span>
-            <span class="text-rose-400">150 (Alarm)</span>
+          <div class="p-2.5 rounded-xl bg-black/50 border border-slate-800">
+            <div class="text-[10px] text-slate-400 uppercase">Memory</div>
+            <div id="vmMem" class="text-base text-amber-400 font-bold mt-0.5">42%</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/50 border border-slate-800">
+            <div class="text-[10px] text-slate-400 uppercase">Ingress Bandwidth</div>
+            <div id="vmNet" class="text-base text-emerald-400 font-bold mt-0.5">NORMAL</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/50 border border-slate-800">
+            <div class="text-[10px] text-slate-400 uppercase">LSA Auth State</div>
+            <div id="vmAuth" class="text-base text-emerald-400 font-bold mt-0.5">NORMAL</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/50 border border-slate-800">
+            <div class="text-[10px] text-slate-400 uppercase">System Integrity</div>
+            <div id="vmSys" class="text-base text-emerald-400 font-bold mt-0.5">NORMAL</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/50 border border-slate-800">
+            <div class="text-[10px] text-slate-400 uppercase">Compromise Status</div>
+            <div id="vmComp" class="text-base text-cyan-400 font-bold mt-0.5">SECURE</div>
           </div>
         </div>
-
-        <div class="flex items-end">
-          <button onclick="runMissionLive()" id="missionStartBtn" class="w-full py-2.5 rounded-lg bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white font-tech font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-rose-600/30 flex items-center justify-center gap-2">
-            <span>⚡ EXECUTE SIMULATION</span>
-          </button>
-        </div>
-
-      </div>
-
-      <!-- SPLIT TERMINAL: RED TEAM OFFENSE vs BLUE TEAM DEFENSE -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        
-        <!-- RED TEAM TERMINAL -->
-        <div class="p-4 rounded-2xl border border-rose-900/60 bg-[#04070e] font-mono text-xs flex flex-col justify-between">
-          <div class="flex items-center justify-between border-b border-rose-950 pb-2 mb-2">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-              <span class="text-rose-400 font-bold font-tech text-sm tracking-wider">RED TEAM OPERATOR (OFFENSE STREAM)</span>
-            </div>
-            <span class="text-[10px] text-slate-500 font-tech">Kali VM Adapter</span>
-          </div>
-          <div id="redTeamTerminal" class="h-64 overflow-y-auto space-y-1 text-slate-300 pr-2">
-            <div class="text-slate-600">// Standby. Waiting for AI Planner to generate schema...</div>
-          </div>
-          <div class="pt-2 border-t border-slate-900 text-[10px] text-slate-500 flex justify-between font-tech">
-            <span>Source: Kali Red Node</span>
-            <span class="text-rose-400">simulated: true</span>
-          </div>
-        </div>
-
-        <!-- BLUE TEAM SIEM TERMINAL -->
-        <div class="p-4 rounded-2xl border border-cyan-900/60 bg-[#04070e] font-mono text-xs flex flex-col justify-between">
-          <div class="flex items-center justify-between border-b border-cyan-950 pb-2 mb-2">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="text-cyan-400 font-bold font-tech text-sm tracking-wider">BLUE TEAM SOC (SIEM DETECTION STREAM)</span>
-            </div>
-            <span class="text-[10px] text-slate-500 font-tech">Audit Channel</span>
-          </div>
-          <div id="blueTeamTerminal" class="h-64 overflow-y-auto space-y-1 text-slate-300 pr-2">
-            <div class="text-slate-600">// Monitoring Windows Event 4625 / 4624 / 4771 event feed...</div>
-          </div>
-          <div class="pt-2 border-t border-slate-900 text-[10px] text-slate-500 flex justify-between font-tech">
-            <span>Detection Rule: KERBEROS_SPRAY_ALERT</span>
-            <span class="text-cyan-400">TTD: &lt; 1.2s</span>
-          </div>
-        </div>
-
       </div>
 
     </div>
   </section>
 
   <!-- ================================================================= -->
-  <!-- FEATURE 3: MITRE ATT&CK MATRIX FOR CHAKRAVYUH -->
+  <!-- FEATURE 1: 5-PHASE AUTONOMOUS RED TEAM AGENT WORKFLOW -->
   <!-- ================================================================= -->
-  <section id="mitre-matrix" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-800">
+  <section id="agent-workflow" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="space-y-4 mb-8">
       <div class="flex items-center gap-2">
-        <span class="px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800 text-xs font-mono font-bold">ADVERSARY TACTICS</span>
-        <h2 class="text-3xl font-black text-white">MITRE ATT&CK Matrix Mapping</h2>
+        <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono-tech font-bold">WORKFLOW ENGINE</span>
+        <h2 class="text-3xl font-black text-white">Autonomous Red Team Agent Lifecycle</h2>
       </div>
-      <p class="text-slate-400 text-sm">
-        How the 4 simulation modules align with real-world enterprise cybersecurity frameworks and attack categories:
+      <p class="text-slate-400 text-sm max-w-3xl">
+        Every simulation run progresses through the 5-phase deterministic cycle: <strong>Discover ➔ Profile ➔ Plan ➔ Prepare ➔ Execute ➔ Observe ➔ Adapt</strong>.
       </p>
-    </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      
-      <!-- Recon -->
-      <div class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] space-y-3">
-        <div class="flex justify-between items-center text-xs font-tech text-cyan-400 font-bold">
-          <span>TA0043: RECONNAISSANCE</span>
-          <span>MODULE 4</span>
-        </div>
-        <h3 class="font-bold text-white text-base">Wireless Airspace Sniffing</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          <strong>T1040: Network Sniffing</strong><br>
-          Generates synthetic 802.11 beacon frames and channel analysis telemetry without transmitting RF.
-        </p>
-        <div class="p-2 bg-black/40 rounded text-[11px] font-mono text-cyan-300 border border-slate-800">
-          Adapter: WirelessAdapter
-        </div>
+      <!-- 5 Phase Circuit Buttons -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2" id="phaseNavGrid">
+        <button onclick="inspectPhase('discover')" id="phaseBtn-discover" class="p-3 rounded-xl border border-[#FF4655] bg-[#FF4655]/20 text-left transition font-mono-tech">
+          <span class="text-[10px] text-[#FF4655] font-bold">PHASE 01</span>
+          <div class="font-bold text-xs text-white mt-0.5">Target Discovery</div>
+        </button>
+        <button onclick="inspectPhase('profile')" id="phaseBtn-profile" class="p-3 rounded-xl border border-slate-800 bg-[#0a101d] text-left transition font-mono-tech">
+          <span class="text-[10px] text-slate-400 font-bold">PHASE 02</span>
+          <div class="font-bold text-xs text-white mt-0.5">Surface Profiling</div>
+        </button>
+        <button onclick="inspectPhase('plan')" id="phaseBtn-plan" class="p-3 rounded-xl border border-slate-800 bg-[#0a101d] text-left transition font-mono-tech">
+          <span class="text-[10px] text-slate-400 font-bold">PHASE 03</span>
+          <div class="font-bold text-xs text-white mt-0.5">Attack Planning</div>
+        </button>
+        <button onclick="inspectPhase('prepare')" id="phaseBtn-prepare" class="p-3 rounded-xl border border-slate-800 bg-[#0a101d] text-left transition font-mono-tech">
+          <span class="text-[10px] text-slate-400 font-bold">PHASE 04</span>
+          <div class="font-bold text-xs text-white mt-0.5">Payload Synthesis</div>
+        </button>
+        <button onclick="inspectPhase('execute')" id="phaseBtn-execute" class="p-3 rounded-xl border border-slate-800 bg-[#0a101d] text-left transition font-mono-tech col-span-2 sm:col-span-1">
+          <span class="text-[10px] text-slate-400 font-bold">PHASE 05</span>
+          <div class="font-bold text-xs text-white mt-0.5">Execution & Loop</div>
+        </button>
       </div>
 
-      <!-- Initial Access -->
-      <div class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] space-y-3">
-        <div class="flex justify-between items-center text-xs font-tech text-purple-400 font-bold">
-          <span>TA0001: INITIAL ACCESS</span>
-          <span>MODULE 3</span>
-        </div>
-        <h3 class="font-bold text-white text-base">Phishing Awareness</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          <strong>T1566: Phishing</strong><br>
-          Generates educational mock messages to synthetic inboxes with zero real credential harvesting.
-        </p>
-        <div class="p-2 bg-black/40 rounded text-[11px] font-mono text-purple-300 border border-slate-800">
-          Adapter: PhishingAdapter
-        </div>
+      <!-- Phase Detail Card -->
+      <div id="phaseDetailCard" class="p-6 rounded-2xl border border-slate-800 bg-[#0a101d] mt-4 font-mono-tech">
+        <!-- Injected via JavaScript -->
       </div>
-
-      <!-- Credential Access -->
-      <div class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] space-y-3">
-        <div class="flex justify-between items-center text-xs font-tech text-rose-400 font-bold">
-          <span>TA0006: CREDENTIAL ACCESS</span>
-          <span>MODULE 1</span>
-        </div>
-        <h3 class="font-bold text-white text-base">Authentication Attacks</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          <strong>T1110: Brute Force & Spraying</strong><br>
-          Simulates RDP, Kerberos, and SMB login failure patterns generating Windows Event 4625 logs.
-        </p>
-        <div class="p-2 bg-black/40 rounded text-[11px] font-mono text-rose-300 border border-slate-800">
-          Adapter: AuthenticationAdapter
-        </div>
-      </div>
-
-      <!-- Impact -->
-      <div class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] space-y-3">
-        <div class="flex justify-between items-center text-xs font-tech text-amber-400 font-bold">
-          <span>TA0040: IMPACT</span>
-          <span>MODULE 2</span>
-        </div>
-        <h3 class="font-bold text-white text-base">Service-Load Evaluation</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          <strong>T1498: Network Denial of Service</strong><br>
-          Bounded Locust workload against authorized local services to measure latency and p95 degradation.
-        </p>
-        <div class="p-2 bg-black/40 rounded text-[11px] font-mono text-amber-300 border border-slate-800">
-          Adapter: ServiceLoadAdapter
-        </div>
-      </div>
-
     </div>
   </section>
 
   <!-- ================================================================= -->
-  <!-- FULL HANDBOOK DOCUMENTATION (ALL 20 PARTS RETAINED) -->
+  <!-- FEATURE 2: COMBINED DEEP ATTACK MECHANICS (FROM REDTEAM-NINE) -->
+  <!-- ================================================================= -->
+  <section id="attack-mechanics" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-800">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-[#FF4655]/20 text-[#FF4655] border border-[#FF4655]/40 text-xs font-mono-tech font-bold">LIVE ENGINES</span>
+          <h2 class="text-3xl font-black text-white">Adversarial Attack Simulation Chamber</h2>
+        </div>
+        <p class="text-slate-400 text-sm mt-1">
+          Detailed technical mechanics for the 4 core Red Team vectors targeting <strong>WIN-TARGET-01</strong> in the isolated cyber range.
+        </p>
+      </div>
+
+      <!-- Attack Module Switcher -->
+      <div class="flex flex-wrap gap-2" id="attackTabButtons">
+        <button onclick="switchAttack('ddos')" id="atBtn-ddos" class="px-4 py-2 rounded-xl text-xs font-mono-tech font-bold bg-[#FF4655] text-white shadow-lg shadow-[#FF4655]/30 transition">
+          01 // Network Saturation (DDoS)
+        </button>
+        <button onclick="switchAttack('auth')" id="atBtn-auth" class="px-4 py-2 rounded-xl text-xs font-mono-tech font-bold bg-slate-800 text-slate-300 hover:text-white transition">
+          02 // Authentication Probing
+        </button>
+        <button onclick="switchAttack('phish')" id="atBtn-phish" class="px-4 py-2 rounded-xl text-xs font-mono-tech font-bold bg-slate-800 text-slate-300 hover:text-white transition">
+          03 // Spear-Phishing Pretext
+        </button>
+        <button onclick="switchAttack('wifi')" id="atBtn-wifi" class="px-4 py-2 rounded-xl text-xs font-mono-tech font-bold bg-slate-800 text-slate-300 hover:text-white transition">
+          04 // Wireless Reconnaissance
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- ATTACK 01: NETWORK SATURATION (DDOS VS WINDOWS TARGET VM) -->
+    <!-- ============================================================= -->
+    <div id="attackView-ddos" class="attack-view space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Controls Column -->
+        <div class="p-6 rounded-2xl border border-slate-800 bg-[#0a101d] space-y-5 font-mono-tech">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <span class="text-xs text-[#FF4655] font-bold">VECTOR 01 // VOLUMETRIC</span>
+            <span class="text-[10px] text-slate-400">Target: WIN-TARGET-01:443</span>
+          </div>
+
+          <!-- Select DDoS Vector -->
+          <div>
+            <label class="block text-xs text-slate-400 mb-2 font-bold uppercase">Attack Vector Mechanism</label>
+            <div class="grid grid-cols-1 gap-2 text-xs">
+              <button onclick="setDdosVector('http2')" id="vecBtn-http2" class="p-2.5 rounded-lg border border-[#FF4655] bg-[#FF4655]/20 text-left text-white transition">
+                <div class="font-bold">HTTP/2 Rapid Reset</div>
+                <div class="text-[10px] text-slate-400">Stream Multiplex Exhaustion (Layer 7)</div>
+              </button>
+              <button onclick="setDdosVector('syn')" id="vecBtn-syn" class="p-2.5 rounded-lg border border-slate-800 bg-black/40 text-left text-slate-300 hover:border-slate-700 transition">
+                <div class="font-bold">TCP SYN Flood</div>
+                <div class="text-[10px] text-slate-400">Half-Open Backlog Queue (Layer 4)</div>
+              </button>
+              <button onclick="setDdosVector('udp')" id="vecBtn-udp" class="p-2.5 rounded-lg border border-slate-800 bg-black/40 text-left text-slate-300 hover:border-slate-700 transition">
+                <div class="font-bold">UDP Amplification</div>
+                <div class="text-[10px] text-slate-400">NTP / DNS Reflection Vector (Layer 3/4)</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Ingress Rate Tiers -->
+          <div>
+            <label class="block text-xs text-slate-400 mb-2 font-bold uppercase">Ingress Velocity Tier</label>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <button onclick="setDdosRate(120)" id="rateBtn-120" class="p-2 rounded bg-black/40 border border-cyan-500/50 text-cyan-300 text-left">
+                <div class="font-bold">120 req/s</div>
+                <div class="text-[9px] text-slate-400">Baseline Normal</div>
+              </button>
+              <button onclick="setDdosRate(4500)" id="rateBtn-4500" class="p-2 rounded bg-black/40 border border-slate-800 text-slate-300 text-left hover:border-slate-700">
+                <div class="font-bold">4,500 req/s</div>
+                <div class="text-[9px] text-slate-400">Moderate Surge</div>
+              </button>
+              <button onclick="setDdosRate(18500)" id="rateBtn-18500" class="p-2 rounded bg-black/40 border border-slate-800 text-slate-300 text-left hover:border-slate-700">
+                <div class="font-bold">18,500 req/s</div>
+                <div class="text-[9px] text-amber-400">Severe Botnet</div>
+              </button>
+              <button onclick="setDdosRate(52000)" id="rateBtn-52000" class="p-2 rounded bg-black/40 border border-slate-800 text-slate-300 text-left hover:border-slate-700">
+                <div class="font-bold">52,000 req/s</div>
+                <div class="text-[9px] text-rose-400">Catastrophic</div>
+              </button>
+            </div>
+          </div>
+
+          <button onclick="toggleDdosSimulation()" id="ddosSimToggleBtn" class="w-full py-3 rounded-xl bg-[#FF4655] hover:bg-[#CC3744] text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-[#FF4655]/30">
+            ▶ INITIATE INGRESS SATURATION
+          </button>
+        </div>
+
+        <!-- Telemetry & Exhaustion Gauges Column -->
+        <div class="lg:col-span-2 p-6 rounded-2xl border border-slate-800 bg-[#0a101d] flex flex-col justify-between font-mono-tech">
+          <div>
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+              <span class="text-cyan-400 font-bold">REAL-TIME INGRESS TELEMETRY & CEILING</span>
+              <span id="ddosEngineStatus" class="text-[10px] text-slate-500 font-bold">STANDBY</span>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+              <div class="p-3 bg-black/40 border border-slate-800 rounded-lg">
+                <div class="text-[10px] text-slate-400">ARRIVAL VELOCITY</div>
+                <div id="ddosRps" class="text-xl font-bold text-white mt-1">120 req/s</div>
+              </div>
+              <div class="p-3 bg-black/40 border border-slate-800 rounded-lg">
+                <div class="text-[10px] text-slate-400">BANDWIDTH</div>
+                <div id="ddosGbps" class="text-xl font-bold text-cyan-400 mt-1">0.14 Gbps</div>
+              </div>
+              <div class="p-3 bg-black/40 border border-slate-800 rounded-lg">
+                <div class="text-[10px] text-slate-400">ROUND-TRIP LATENCY</div>
+                <div id="ddosLat" class="text-xl font-bold text-emerald-400 mt-1">22 ms</div>
+              </div>
+              <div class="p-3 bg-black/40 border border-slate-800 rounded-lg">
+                <div class="text-[10px] text-slate-400">EXHAUSTION CEILING</div>
+                <div id="ddosCeil" class="text-xl font-bold text-amber-400 mt-1">10,500 req/s</div>
+              </div>
+            </div>
+
+            <!-- Exhaustion Meter Bar -->
+            <div class="space-y-1.5 mb-4">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Target Ingress Saturation Ratio:</span>
+                <span id="ddosRatioText" class="text-cyan-400 font-bold">1.1% of threshold</span>
+              </div>
+              <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden">
+                <div id="ddosProgressBar" class="bg-cyan-500 h-full w-[2%] transition-all duration-300"></div>
+              </div>
+            </div>
+
+            <!-- Live Streaming Packet Inspect Box -->
+            <div id="ddosStreamBox" class="p-3 bg-[#04070e] border border-slate-800 rounded-lg text-[11px] h-32 overflow-y-auto space-y-1 text-slate-300">
+              <div class="text-slate-500">// Bounded Locust / Multi-source packet engine ready. Click [INITIATE] to pulse load...</div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-[10px] text-slate-500 flex justify-between">
+            <span>Enforced by Safety Gateway: Max 60s Duration Ceiling</span>
+            <span>Target Isolation: 192.168.56.20 Only</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- ATTACK 02: AUTHENTICATION PROBING (CREDENTIAL BRUTE FORCE) -->
+    <!-- ============================================================= -->
+    <div id="attackView-auth" class="attack-view hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Controls Column -->
+        <div class="p-6 rounded-2xl border border-slate-800 bg-[#0a101d] space-y-5 font-mono-tech">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <span class="text-xs text-amber-400 font-bold">VECTOR 02 // CREDENTIAL ACCESS</span>
+            <span class="text-[10px] text-slate-400">Target: lab-user</span>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-400 mb-1 font-bold">Candidate Dictionary Preset</label>
+            <select id="authWordlistSelect" class="w-full bg-black/60 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200">
+              <option value="top15">RockYou Common 15 + Permutations</option>
+              <option value="contextual">Contextual Lab Permutations (Northstar2024!, Autumn2024!)</option>
+              <option value="lockout_evasion">Lockout Evasion Profile (Jitter 1.2s delay)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-400 mb-1 font-bold">Target Account Authentication Protocol</label>
+            <div class="p-2.5 bg-black/40 rounded border border-slate-800 text-xs text-slate-300 space-y-1">
+              <div>Domain: <span class="text-cyan-400">NORTHSTAR.LOCAL</span></div>
+              <div>Account: <span class="text-white font-bold">lab-user (Standard User)</span></div>
+              <div>Target LSA Service: <span class="text-slate-200">Kerberos Pre-Auth (Port 88) / RDP (3389)</span></div>
+            </div>
+          </div>
+
+          <button onclick="runAuthProbingLoop()" id="authProbeBtn" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-amber-500/20">
+            ▶ EXECUTE PROBING PIPELINE
+          </button>
+        </div>
+
+        <!-- Real-time Auth Stream & Lockout Telemetry -->
+        <div class="lg:col-span-2 p-6 rounded-2xl border border-slate-800 bg-[#0a101d] flex flex-col justify-between font-mono-tech">
+          <div>
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+              <span class="text-amber-400 font-bold">AUTHENTICATION PROBE SEQUENCE & WINDOWS LSA LOGS</span>
+              <span id="authProbeStatus" class="text-[10px] text-slate-500 font-bold">IDLE</span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 mb-4 text-xs">
+              <div class="p-3 bg-black/40 border border-slate-800 rounded-lg">
+                <div class="text-[10px] text-slate-400">PROBES SENT</div>
+                <div id="authProbeCount" class="text-xl font-bold text-white mt-1">0 / 15</div>
+              </div>
+              <div class="p-3 bg-black/40 border border-slate-800 rounded-lg">
+                <div class="text-[10px] text-slate-400">STATUS 401 FAILURES</div>
+                <div id="authFailCount" class="text-xl font-bold text-rose-400 mt-1">0</div>
+              </div>
+              <div class="p-3 bg-black/40 border border-slate-800 rounded-lg">
+                <div class="text-[10px] text-slate-400">ACCOUNT STATUS</div>
+                <div id="authAccountLockStatus" class="text-xl font-bold text-emerald-400 mt-1">ACTIVE</div>
+              </div>
+            </div>
+
+            <!-- Streaming Attempt Table -->
+            <div id="authAttemptsTable" class="p-3 bg-[#04070e] border border-slate-800 rounded-lg text-[11px] h-48 overflow-y-auto space-y-1.5 text-slate-300">
+              <div class="text-slate-500">// Probing pipeline standby. Click [EXECUTE PROBING PIPELINE] to begin candidate evaluation...</div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-[10px] text-slate-500 flex justify-between">
+            <span>Audit Standard: Windows Security Event 4625 (Logon Failure)</span>
+            <span>Flag: simulated: true</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- ATTACK 03: SPEAR-PHISHING PRETEXT & SANDBOX INSPECTOR -->
+    <!-- ============================================================= -->
+    <div id="attackView-phish" class="attack-view hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Controls Column -->
+        <div class="p-6 rounded-2xl border border-slate-800 bg-[#0a101d] space-y-5 font-mono-tech">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <span class="text-xs text-purple-400 font-bold">VECTOR 03 // PRETEXT SYNTHESIS</span>
+            <span class="text-[10px] text-slate-400">Zero Credential Harvest</span>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-400 mb-1 font-bold">Select Pretext Narrative Profile</label>
+            <select id="phishScenarioSelect" onchange="onPhishSelectChange()" class="w-full bg-black/60 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-200">
+              <option value="orion">IT Operations Orion Mandatory System Patch</option>
+              <option value="security">Corporate Security SSO Token Re-Authentication</option>
+              <option value="benefits">HR Annual Benefits Open Enrollment Form</option>
+            </select>
+          </div>
+
+          <div class="p-3 bg-black/40 rounded border border-slate-800 space-y-1 text-xs text-slate-300">
+            <div>Recipient: <span class="text-purple-300 font-bold">lab-user@northstar.local</span></div>
+            <div>Inbound Gate: <span class="text-slate-200">Isolated Virtual Mailbox (192.168.56.25)</span></div>
+            <div>Credential Capture: <span class="text-rose-400 font-bold">STRICTLY DISABLED</span></div>
+          </div>
+
+          <button onclick="deliverPhishingEmail()" class="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-purple-600/30">
+            ▶ DELIVER PRETEXT EMAIL
+          </button>
+        </div>
+
+        <!-- Rendered Email & Sandbox Warnings -->
+        <div class="lg:col-span-2 p-6 rounded-2xl border border-slate-800 bg-[#0a101d] flex flex-col justify-between font-mono-tech">
+          <div>
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+              <span class="text-purple-400 font-bold">SYNTHESIZED EMAIL CLIENT VIEW (THUNDERBIRD / OUTLOOK)</span>
+              <button onclick="toggleEmailHeaders()" class="text-[10px] text-cyan-400 hover:underline">Toggle Headers</button>
+            </div>
+
+            <!-- Email Headers Box -->
+            <div id="emailHeadersBox" class="hidden p-3 bg-black/60 border border-slate-800 rounded-lg text-[10px] space-y-0.5 text-slate-400 mb-3 font-mono">
+              <div>From: IT Operations &lt;it-notice@northstar-corp-update.com&gt;</div>
+              <div>To: lab-user@northstar.local</div>
+              <div>Subject: [URGENT] Mandatory Orion System Update - Action Required Within 24 Hours</div>
+              <div>Authentication-Results: spf=fail (IP 192.168.56.10 not authorized); dkim=none</div>
+            </div>
+
+            <!-- Rendered Email Body -->
+            <div class="p-4 bg-white text-slate-900 rounded-xl space-y-3 font-sans text-xs">
+              <div class="flex items-center justify-between border-b border-slate-200 pb-2 font-mono text-[11px] text-slate-600">
+                <span>Subject: <strong>[URGENT] Mandatory Orion System Update</strong></span>
+                <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-[10px]">EXTERNAL SENDER</span>
+              </div>
+              <p>Dear lab-user,</p>
+              <p>IT Operations is rolling out a critical security hotfix for your Windows workstation (WIN-TARGET-01). You must authenticate your session before 18:00 UTC to maintain domain access.</p>
+              <div class="p-3 bg-slate-100 rounded border border-slate-300">
+                <button onclick="triggerSandboxWarning()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded shadow">
+                  Verify Credentials & Apply Hotfix ➔
+                </button>
+                <div class="text-[10px] text-slate-500 mt-1 font-mono">Link: http://lab-awareness.local/orion-update?id=8821</div>
+              </div>
+              <p class="text-[11px] text-slate-500">Northstar Corporate IT • Security Awareness Simulation</p>
+            </div>
+
+            <!-- Live Sandbox Inspection Modal Area -->
+            <div id="sandboxWarningModal" class="hidden mt-3 p-3 bg-rose-950/80 border border-rose-500 rounded-xl text-xs space-y-1 text-rose-200">
+              <div class="flex items-center justify-between font-bold text-white">
+                <span>🛡️ URL THREAT SANDBOX WARNING TRIGGERED</span>
+                <button onclick="document.getElementById('sandboxWarningModal').classList.add('hidden')" class="text-xs">✕</button>
+              </div>
+              <div>• Destination URL intercepted: <code>http://lab-awareness.local/orion-update</code></div>
+              <div>• Redirection: Safely diverted to educational landing page. Zero credentials were harvested.</div>
+              <div>• Engagement Metric: Logged <code>action=mock_link_clicked</code> in SQLite observation database.</div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-[10px] text-slate-500 flex justify-between">
+            <span>Educational Awareness Mode</span>
+            <span>Credential Capture Prohibited</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- ATTACK 04: WIRELESS AIRSPACE RECONNAISSANCE -->
+    <!-- ============================================================= -->
+    <div id="attackView-wifi" class="attack-view hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <div class="p-6 rounded-2xl border border-slate-800 bg-[#0a101d] space-y-5 font-mono-tech">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <span class="text-xs text-emerald-400 font-bold">VECTOR 04 // 802.11 RECON</span>
+            <span class="text-[10px] text-slate-400">Synthetic RF Only</span>
+          </div>
+
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Generates synthetic 802.11 management frames representing Evil Twin access points and deauthentication floods to test Wireless Intrusion Detection Systems (WIDS) without radio emissions.
+          </p>
+
+          <button onclick="runWifiRadarScan()" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-500/20">
+            ▶ INITIATE AIRSPACE SWEEP
+          </button>
+        </div>
+
+        <!-- Radar Display -->
+        <div class="lg:col-span-2 p-6 rounded-2xl border border-slate-800 bg-[#0a101d] flex flex-col items-center justify-between font-mono-tech">
+          <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3 mb-2">
+            <span class="text-emerald-400 font-bold">SYNTHETIC 802.11 AIRSPACE RADAR</span>
+            <span id="wifiRadarStatus" class="text-[10px] text-slate-500">STANDBY</span>
+          </div>
+
+          <div class="relative w-48 h-48 rounded-full border-2 border-emerald-500/40 flex items-center justify-center overflow-hidden my-3">
+            <div class="absolute inset-0 radar-beam animate-radar"></div>
+            <div class="w-32 h-32 rounded-full border border-emerald-500/30"></div>
+            <div class="w-16 h-16 rounded-full border border-emerald-500/20"></div>
+            <div class="absolute w-full h-[1px] bg-emerald-500/30"></div>
+            <div class="absolute h-full w-[1px] bg-emerald-500/30"></div>
+
+            <div id="apBlip1" class="absolute w-3 h-3 rounded-full bg-cyan-400 shadow top-12 left-10" title="Corp_Secure"></div>
+            <div id="apBlip2" class="absolute w-3 h-3 rounded-full bg-emerald-400 shadow bottom-10 right-14" title="Guest_WiFi"></div>
+            <div id="apBlipRogue" class="hidden absolute w-3 h-3 rounded-full bg-rose-500 shadow top-14 right-12 animate-ping" title="EVIL_TWIN_AP"></div>
+          </div>
+
+          <div id="wifiAirspaceLog" class="w-full text-xs text-slate-300 text-left pt-2 border-t border-slate-800 space-y-1">
+            <div>Click [INITIATE AIRSPACE SWEEP] to begin synthetic 802.11 beacon telemetry capture...</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ================================================================= -->
+  <!-- COMPLETE MASTER HANDBOOK v4.0 (ALL 20 PARTS RETAINED) -->
   <!-- ================================================================= -->
   <section id="handbook" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-800">
     <div class="flex items-center justify-between mb-8">
       <div>
         <h2 class="text-3xl font-black text-white">Complete Master Handbook v4.0</h2>
-        <p class="text-slate-400 text-sm">Every clause, contract, architecture diagram, and reviewer question</p>
+        <p class="text-slate-400 text-sm">Full specification text, architecture definitions, and audit contracts</p>
       </div>
-      <button onclick="expandAllHandbook()" class="text-xs font-mono text-cyan-400 border border-cyan-800/60 bg-cyan-950/40 px-3 py-1.5 rounded-lg hover:bg-cyan-900/60 transition">
+      <button onclick="expandAllSections()" class="text-xs font-mono-tech text-cyan-400 border border-cyan-800/60 bg-cyan-950/40 px-3 py-1.5 rounded-lg hover:bg-cyan-900/60 transition">
         Expand All Sections
       </button>
     </div>
 
-    <div class="space-y-4" id="masterHandbook">
+    <!-- ACCORDION -->
+    <div class="space-y-4" id="fullHandbookAccordion">
       
       <!-- Part 1 & 2 -->
-      <details class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] group" open>
+      <details class="p-5 rounded-2xl border border-slate-800 bg-[#0a101d] group" open>
         <summary class="font-bold text-white text-base cursor-pointer list-none flex items-center justify-between font-tech">
           <div class="flex items-center gap-3">
-            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 1-2</span>
-            <span>Project Foundation & Laboratory Environment</span>
+            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono-tech">Part 1-2</span>
+            <span>Project Foundation & Laboratory Network Architecture</span>
           </div>
           <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
         </summary>
         <div class="pt-4 text-xs sm:text-sm text-slate-300 space-y-3 leading-relaxed border-t border-slate-800/80 mt-4">
           <p><strong>CHAKRAVYUH</strong> is an AI-powered Red Team simulation platform designed to coordinate controlled cybersecurity experiments through a centralized AI Planner.</p>
-          <p><strong>Core Design Principle:</strong> AI plans. Python validates. The Safety Gateway authorizes. Adapters execute. The Observation Engine measures.</p>
-          <div class="p-3 bg-black/50 rounded-lg border border-slate-800 font-mono text-xs">
-            <strong>Exclusions:</strong> Public network targets, unconstrained DDoS, actual password harvesting, physical radio interference, and autonomous shell command execution are explicitly prohibited.
+          <p><strong>Governing Principle:</strong> AI plans. Python validates. The Safety Gateway authorizes. Adapters execute. The Observation Engine measures.</p>
+          <div class="p-3 bg-black/50 rounded-lg border border-slate-800 font-mono-tech text-xs">
+            <strong>Range Configuration:</strong> Isolated host-only virtual network (192.168.56.0/24). Public target IP ranges are unconditionally rejected by the deterministic Safety Gateway.
           </div>
         </div>
       </details>
 
-      <!-- Part 3: System Architecture Diagram -->
-      <details class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] group" open>
+      <!-- Part 3: Architecture Diagram -->
+      <details class="p-5 rounded-2xl border border-slate-800 bg-[#0a101d] group" open>
         <summary class="font-bold text-white text-base cursor-pointer list-none flex items-center justify-between font-tech">
           <div class="flex items-center gap-3">
-            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 3</span>
-            <span>Complete System Architecture Topology</span>
+            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono-tech">Part 3</span>
+            <span>System Architecture Topology & 7-Layer Stack</span>
           </div>
           <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
         </summary>
@@ -648,11 +725,11 @@ flowchart TD
       </details>
 
       <!-- Part 7 & 8: Class Diagram -->
-      <details class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] group">
+      <details class="p-5 rounded-2xl border border-slate-800 bg-[#0a101d] group">
         <summary class="font-bold text-white text-base cursor-pointer list-none flex items-center justify-between font-tech">
           <div class="flex items-center gap-3">
-            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 7-8</span>
-            <span>Class Architecture & BaseAdapter Interfaces</span>
+            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono-tech">Part 7-8</span>
+            <span>Class Architecture & BaseAdapter Interface</span>
           </div>
           <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
         </summary>
@@ -691,50 +768,18 @@ classDiagram
         </div>
       </details>
 
-      <!-- Part 9: State Diagram -->
-      <details class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] group">
-        <summary class="font-bold text-white text-base cursor-pointer list-none flex items-center justify-between font-tech">
-          <div class="flex items-center gap-3">
-            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 9</span>
-            <span>Execution Lifecycle & State Machine</span>
-          </div>
-          <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
-        </summary>
-        <div class="pt-4 text-xs sm:text-sm text-slate-300 space-y-4 border-t border-slate-800/80 mt-4">
-          <div class="p-4 rounded-xl border border-slate-800 bg-black/60">
-            <div class="mermaid">
-stateDiagram-v2
-    [*] --> CREATED
-    CREATED --> VALIDATING
-    VALIDATING --> REJECTED
-    VALIDATING --> APPROVED
-    APPROVED --> QUEUED
-    QUEUED --> RUNNING
-    RUNNING --> COMPLETED
-    RUNNING --> FAILED
-    RUNNING --> CANCELLING
-    CANCELLING --> CANCELLED
-    COMPLETED --> [*]
-    FAILED --> [*]
-    CANCELLED --> [*]
-    REJECTED --> [*]
-            </div>
-          </div>
-        </div>
-      </details>
-
       <!-- Part 17: Reality Check -->
-      <details class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] group" open>
+      <details class="p-5 rounded-2xl border border-slate-800 bg-[#0a101d] group" open>
         <summary class="font-bold text-white text-base cursor-pointer list-none flex items-center justify-between font-tech">
           <div class="flex items-center gap-3">
-            <span class="px-2 py-0.5 rounded bg-indigo-950 text-indigo-400 border border-indigo-800 text-xs font-mono">Part 17</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-950 text-indigo-400 border border-indigo-800 text-xs font-mono-tech">Part 17</span>
             <span>Reality Check: What is Actually AI?</span>
           </div>
           <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
         </summary>
         <div class="pt-4 text-xs sm:text-sm text-slate-300 space-y-3 leading-relaxed border-t border-slate-800/80 mt-4">
-          <table class="w-full text-left text-xs border border-slate-800 rounded-lg overflow-hidden">
-            <thead class="bg-slate-900 font-mono text-cyan-400">
+          <table class="w-full text-left text-xs border border-slate-800 rounded-lg overflow-hidden font-mono-tech">
+            <thead class="bg-slate-900 text-cyan-400">
               <tr>
                 <th class="p-2.5 border-b border-slate-800">Capability</th>
                 <th class="p-2.5 border-b border-slate-800">Implementation</th>
@@ -743,53 +788,51 @@ stateDiagram-v2
             </thead>
             <tbody class="divide-y divide-slate-800 text-slate-300">
               <tr>
-                <td class="p-2.5 font-bold text-white">Authentication Simulation</td>
-                <td class="p-2.5 text-cyan-400 font-mono">Synthetic events</td>
-                <td class="p-2.5">Event generation and SIEM rule detection workflow</td>
+                <td class="p-2.5 font-bold text-white">Authentication Probing</td>
+                <td class="p-2.5 text-cyan-400">Synthetic Event 4625</td>
+                <td class="p-2.5">Telemetry generation & SIEM alert threshold testing</td>
               </tr>
               <tr>
-                <td class="p-2.5 font-bold text-white">Service Load Simulation</td>
-                <td class="p-2.5 text-amber-400 font-mono">Bounded Locust</td>
-                <td class="p-2.5">Actual latency and throughput measurements on local test host</td>
+                <td class="p-2.5 font-bold text-white">Network Saturation</td>
+                <td class="p-2.5 text-amber-400">Bounded Locust / Multi-source</td>
+                <td class="p-2.5">Actual latency & resource exhaustion metrics</td>
               </tr>
               <tr>
-                <td class="p-2.5 font-bold text-white">Phishing Awareness</td>
-                <td class="p-2.5 text-purple-400 font-mono">Synthetic drill</td>
-                <td class="p-2.5">Educational mock workflows & interaction tracking</td>
+                <td class="p-2.5 font-bold text-white">Spear-Phishing Pretext</td>
+                <td class="p-2.5 text-purple-400">Synthetic Mailbox & Sandbox</td>
+                <td class="p-2.5">Educational mock workflows; no credential theft</td>
               </tr>
               <tr>
                 <td class="p-2.5 font-bold text-white">Wireless Security</td>
-                <td class="p-2.5 text-emerald-400 font-mono">Synthetic 802.11</td>
-                <td class="p-2.5">Scenario representation without physical radio transmission</td>
+                <td class="p-2.5 text-emerald-400">Synthetic 802.11 Frames</td>
+                <td class="p-2.5">WIDS detection verification without physical RF radiation</td>
               </tr>
             </tbody>
           </table>
         </div>
       </details>
 
-      <!-- Part 18: Technical Reviewer Questions -->
-      <details class="p-5 rounded-2xl border border-slate-800 bg-[#080d18] group">
+      <!-- Part 18: Reviewer Questions -->
+      <details class="p-5 rounded-2xl border border-slate-800 bg-[#0a101d] group">
         <summary class="font-bold text-white text-base cursor-pointer list-none flex items-center justify-between font-tech">
           <div class="flex items-center gap-3">
-            <span class="px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800 text-xs font-mono">Part 18</span>
+            <span class="px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800 text-xs font-mono-tech">Part 18</span>
             <span>15 Technical Reviewer Questions & Defense Arguments</span>
           </div>
           <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
         </summary>
-        <div class="pt-4 text-xs sm:text-sm text-slate-300 space-y-3 leading-relaxed border-t border-slate-800/80 mt-4">
-          <div class="space-y-3 font-mono text-xs">
-            <div>
-              <strong class="text-rose-400">Q1. Why use AI instead of fixed Python scripts?</strong>
-              <p class="text-slate-400 mt-1">AI interprets objectives, recommends approved scenario categories, and evaluates resulting observations. Python remains responsible for deterministic authorization and safe execution.</p>
-            </div>
-            <div>
-              <strong class="text-rose-400">Q3. Can the AI directly execute commands?</strong>
-              <p class="text-slate-400 mt-1">No. The AI produces structured JSON requests. The Safety Gateway and execution system control what can actually run.</p>
-            </div>
-            <div>
-              <strong class="text-rose-400">Q4. How do you prevent unauthorized execution?</strong>
-              <p class="text-slate-400 mt-1">Target allowlisting, scenario permissions, parameter bounds, resource limits, and cooperative kill-switch cancellation tokens.</p>
-            </div>
+        <div class="pt-4 text-xs sm:text-sm text-slate-300 space-y-3 leading-relaxed border-t border-slate-800/80 mt-4 font-mono-tech">
+          <div>
+            <strong class="text-cyan-300">Q1. Why use AI instead of fixed Python scripts?</strong>
+            <p class="text-slate-400 mt-1">AI dynamically interprets objectives, recommends tailored profiles from catalogs, and evaluates telemetry. Python enforces deterministic safety and execution control.</p>
+          </div>
+          <div>
+            <strong class="text-cyan-300">Q3. Can the AI directly execute commands?</strong>
+            <p class="text-slate-400 mt-1">No. The AI produces structured JSON proposals. The Safety Gateway and Python execution engine independently validate and control what can run.</p>
+          </div>
+          <div>
+            <strong class="text-cyan-300">Q4. How do you prevent unauthorized execution?</strong>
+            <p class="text-slate-400 mt-1">Target allowlisting, scenario permissions, parameter bounds, resource limits, and cooperative kill-switch cancellation tokens.</p>
           </div>
         </div>
       </details>
@@ -798,16 +841,17 @@ stateDiagram-v2
   </section>
 
   <!-- FOOTER -->
-  <footer class="border-t border-slate-800 py-12 text-center text-xs text-slate-500 font-tech space-y-2 bg-[#020409]">
-    <div class="flex items-center justify-center gap-2 text-rose-400 font-bold tracking-widest">
-      <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-      CHAKRAVYUH v4.0 // TACTICAL ADVERSARIAL RED TEAM SIMULATION PLATFORM
+  <footer class="border-t border-slate-800 py-12 text-center text-xs text-slate-500 font-mono-tech space-y-2 bg-[#020409]">
+    <div class="flex items-center justify-center gap-2 text-[#FF4655] font-bold tracking-widest font-tech">
+      <span class="w-2 h-2 rounded-full bg-[#FF4655]"></span>
+      CHAKRAVYUH v4.0 // RED TEAM CYBER RANGE & ATTACK SIMULATION PLATFORM
     </div>
-    <div>Designed for Isolated Virtual Cybersecurity Laboratories • GitHub Pages Static Hosting</div>
+    <div>Combined with Live Attack Simulation Mechanics from <a href="https://redteam-nine.vercel.app/" target="_blank" class="text-cyan-400 underline font-bold">redteam-nine.vercel.app</a></div>
+    <div>Hosted via GitHub Pages • Dedicated to Authorized Isolated Cybersecurity Laboratories</div>
   </footer>
 
   <!-- ================================================================= -->
-  <!-- JAVASCRIPT: ADVANCED AUDIO SYNTHESIZER & REAL-TIME RED-BLUE ENGINE -->
+  <!-- JAVASCRIPT: REDTEAM-NINE ENGINES COMBINED SCRIPT -->
   <!-- ================================================================= -->
   <script>
     // Initialize Mermaid
@@ -819,24 +863,22 @@ stateDiagram-v2
         background: '#04070e',
         primaryColor: '#00f3ff',
         primaryTextColor: '#f8fafc',
-        primaryBorderColor: '#ff0055',
+        primaryBorderColor: '#FF4655',
         lineColor: '#64748b',
-        secondaryColor: '#080d18',
-        tertiaryColor: '#0d1527'
+        secondaryColor: '#0a101d',
+        tertiaryColor: '#0f172a'
       }
     });
 
-    // Web Audio Synthesizer (Zero file downloads, pure Web Audio API)
+    // Audio & Voice Synthesizer
     let audioEnabled = true;
     let voiceEnabled = false;
     let audioCtx = null;
 
     function toggleAudio() {
       audioEnabled = !audioEnabled;
-      const stateEl = document.getElementById('audioState');
-      const iconEl = document.getElementById('audioIcon');
-      stateEl.innerText = audioEnabled ? 'ON' : 'OFF';
-      iconEl.innerText = audioEnabled ? '🔊' : '🔇';
+      document.getElementById('audioState').innerText = audioEnabled ? 'ON' : 'OFF';
+      document.getElementById('audioIcon').innerText = audioEnabled ? '🔊' : '🔇';
       if (audioEnabled) {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         playBeep(880, 0.08, 'sine');
@@ -845,11 +887,9 @@ stateDiagram-v2
 
     function toggleVoice() {
       voiceEnabled = !voiceEnabled;
-      const stateEl = document.getElementById('voiceState');
-      const iconEl = document.getElementById('voiceIcon');
-      stateEl.innerText = voiceEnabled ? 'ON' : 'OFF';
-      iconEl.innerText = voiceEnabled ? '🗣️' : '🔇';
-      if (voiceEnabled) speakText("Voice intelligence active. Ready for red team simulation.");
+      document.getElementById('voiceState').innerText = voiceEnabled ? 'ON' : 'OFF';
+      document.getElementById('voiceIcon').innerText = voiceEnabled ? '🗣️' : '🔇';
+      if (voiceEnabled) speakText("Voice synthesis enabled. Red team simulation ready.");
     }
 
     function playBeep(freq = 440, duration = 0.1, type = 'sine') {
@@ -874,16 +914,11 @@ stateDiagram-v2
       window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(text);
       utter.rate = 1.05;
-      utter.pitch = 0.9;
+      utter.pitch = 0.92;
       window.speechSynthesis.speak(utter);
     }
 
-    function speakBriefing() {
-      toggleVoice();
-      speakText("Chakravyuh operational. The platform coordinates controlled Red Team simulations through an AI Planner and deterministic Safety Gateway. All telemetry is isolated and logged.");
-    }
-
-    // Scroll Progress Bar
+    // Scroll Progress
     window.addEventListener('scroll', () => {
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -891,20 +926,20 @@ stateDiagram-v2
       document.getElementById('scrollProgressBar').style.width = scrolled + '%';
     });
 
-    // Hero Particle Network Canvas
+    // Hero Particle Canvas
     const canvas = document.getElementById('heroCanvas');
     if (canvas) {
       const ctx = canvas.getContext('2d');
       let width = canvas.width = window.innerWidth;
-      let height = canvas.height = 450;
+      let height = canvas.height = 420;
 
-      const dots = Array.from({ length: 50 }, () => ({
+      const dots = Array.from({ length: 48 }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 1.0,
-        vy: (Math.random() - 0.5) * 1.0,
+        vx: (Math.random() - 0.5) * 0.9,
+        vy: (Math.random() - 0.5) * 0.9,
         radius: Math.random() * 2 + 1,
-        color: Math.random() > 0.4 ? '#ff0055' : '#00f3ff'
+        color: Math.random() > 0.5 ? '#FF4655' : '#00f3ff'
       }));
 
       function drawMatrix() {
@@ -925,9 +960,9 @@ stateDiagram-v2
           for (let j = i + 1; j < dots.length; j++) {
             const d2 = dots[j];
             const dist = Math.hypot(d.x - d2.x, d.y - d2.y);
-            if (dist < 120) {
-              ctx.strokeStyle = d.color === '#ff0055' ? 'rgba(255, 0, 85, 0.12)' : 'rgba(0, 243, 255, 0.12)';
-              ctx.lineWidth = 1 - dist / 120;
+            if (dist < 115) {
+              ctx.strokeStyle = d.color === '#FF4655' ? 'rgba(255, 70, 85, 0.12)' : 'rgba(0, 243, 255, 0.12)';
+              ctx.lineWidth = 1 - dist / 115;
               ctx.beginPath();
               ctx.moveTo(d.x, d.y);
               ctx.lineTo(d2.x, d2.y);
@@ -944,189 +979,318 @@ stateDiagram-v2
       });
     }
 
-    // Range Target Inspector
-    const targetsData = {
-      'RED_OPS': {
-        name: 'CHAKRAVYUH RED OPS NODE',
-        ip: '192.168.56.5 [SIMULATOR HOST]',
-        status: 'CONTROLLER ACTIVE',
-        adapter: 'Centralized AI Planner & Orchestrator',
-        ports: 'Internal Python IPC, SQLite, Streamlit',
-        limits: 'Safety Gateway Enforced',
-        purpose: 'Executes controlled adapters, verifies Pydantic schemas, and injects synthetic telemetry into the virtual range.'
+    // 5-Phase Agent Workflow Content
+    const agentPhasesData = {
+      'discover': {
+        title: "PHASE 01: TARGET DISCOVERY & LAB SCOPING",
+        tag: "01 // HOST-ONLY VIRTUAL SUBNET SCAN",
+        desc: "The autonomous agent initiates discovery across the isolated virtual laboratory network (192.168.56.0/24). Identifies WIN-TARGET-01 running Windows 11 Enterprise with active user session 'lab-user'.",
+        indicators: [
+          { label: "Target Hostname", val: "WIN-TARGET-01" },
+          { label: "Target IP Address", val: "192.168.56.20" },
+          { label: "Attacker Hostname", val: "RED-TEAM-01 (192.168.56.10)" },
+          { label: "Logged-In Context", val: "lab-user (Standard User Session)" }
+        ]
       },
-      'WINDOWS_LAB': {
-        name: 'WINDOWS-LAB-01',
-        ip: '192.168.56.10 [ALLOWLISTED]',
-        status: 'TARGET READY',
-        adapter: 'Authentication Simulation Adapter',
-        ports: 'TCP/3389 (RDP), TCP/445 (SMB), TCP/88 (Kerberos)',
-        limits: 'Max 100 events / 60 seconds duration',
-        purpose: 'Primary authorized target for testing Windows Security Event telemetry generation (IDs 4624, 4625, 4771) and verifying SIEM detection latency.'
+      'profile': {
+        title: "PHASE 02: ATTACK SURFACE ENUMERATION",
+        tag: "02 // SERVICE & CAPACITY PROFILING",
+        desc: "Probes listening services. Confirms RDP (TCP/3389), SMB (TCP/445), HTTP (TCP/443), and Kerberos (TCP/88). Measures baseline traffic at 120 req/s with saturation ceiling at 10,500 req/s.",
+        indicators: [
+          { label: "Open Vectors", val: "HTTP/443, RDP/3389, SMB/445" },
+          { label: "Baseline Latency", val: "22 ms" },
+          { label: "Saturation Limit", val: "10,500 req/s" },
+          { label: "LSA State", val: "Protected (Max 5 failed attempts/minute)" }
+        ]
       },
-      'LOAD_API': {
-        name: 'SERVICES-LAB-02',
-        ip: '192.168.56.15 [ALLOWLISTED]',
-        status: 'API ONLINE',
-        adapter: 'Service-Load Adapter (Locust)',
-        ports: 'TCP/8080 (REST API), TCP/443 (HTTPS)',
-        limits: 'Max 5 concurrent users / 60s cap',
-        purpose: 'Authorized local test API for measuring throughput, latency, and p95 degradation under bounded locust workloads.'
+      'plan': {
+        title: "PHASE 03: SIMULATED ATTACK PLAN DEFINITION",
+        tag: "03 // CENTRALIZED AI PLANNER REASONING",
+        desc: "AI Planner generates schema-validated JSON plan. Chooses between Volumetric Saturation, Kerberos Password Spraying, or Orion Pretext synthesis.",
+        indicators: [
+          { label: "AI Planner Model", val: "Configured LLM / Deterministic Fallback" },
+          { label: "Schema Validation", val: "Pydantic V2 Verified" },
+          { label: "Safety Gateway", val: "Target Verified in Allowlist" },
+          { label: "Next Action", val: "DISPATCH_TO_EXECUTION_ENGINE" }
+        ]
       },
-      'MAIL_SIM': {
-        name: 'MAIL-LAB-03',
-        ip: '192.168.56.25 [ALLOWLISTED]',
-        status: 'INBOXES READY',
-        adapter: 'Phishing-Awareness Adapter',
-        ports: 'TCP/25 (SMTP Test), TCP/80 (Landing Page)',
-        limits: 'Synthetic recipients only / No credential capture',
-        purpose: 'Delivers educational simulated awareness content to synthetic recipient inboxes and records landing page visits.'
+      'prepare': {
+        title: "PHASE 04: PAYLOAD & CANDIDATE SYNTHESIS",
+        tag: "04 // CONTROLLED WEAPONIZATION (SYNTHETIC)",
+        desc: "Prepares bounded workloads. For auth: synthesizes candidate permutations (Northstar2024!, Autumn2024!). For DDoS: configures 36 simulated source threads with HTTP/2 Rapid Reset streams.",
+        indicators: [
+          { label: "Credential Presets", val: "15 permutations with lockout avoidance" },
+          { label: "Locust Config", val: "Max 5 virtual users, 60s timeout" },
+          { label: "Phish Template", val: "SPF spoof test, credential harvest = False" },
+          { label: "Safety Token", val: "Active (Cancellable Thread)" }
+        ]
       },
-      'WIFI_SENSOR': {
-        name: 'RF-LAB-04 (802.11 SENSOR)',
-        ip: 'MONITOR MODE [SYNTHETIC RF]',
-        status: 'SNIFFER ARMED',
-        adapter: 'Wireless-Security Adapter',
-        ports: 'Synthetic 802.11 Management Frames',
-        limits: 'mode: synthetic_only (No Radio Broadcast)',
-        purpose: 'Generates structured beacon frames, Evil Twin AP representations, and deauth frame logs for WIDS alert rule verification.'
+      'execute': {
+        title: "PHASE 05: CONTROLLED EXECUTION & OBSERVATION",
+        tag: "05 // TELEMETRY MEASUREMENT & CLOSED-LOOP",
+        desc: "Adapter executes safely. Observation Engine captures response codes and Windows Security Event logs (4625, 4624). Persists structured audit trail to SQLite.",
+        indicators: [
+          { label: "Event Ingestion", val: "simulated: true recorded" },
+          { label: "Time To Detect", val: "< 1.2s SIEM trigger" },
+          { label: "Kill Switch", val: "Standby for operator abort" },
+          { label: "Final Status", val: "COMPLETED ➔ AI Stop Decision" }
+        ]
       }
     };
 
-    function inspectTarget(key) {
+    function inspectPhase(key) {
       playBeep(640, 0.08, 'triangle');
-      const data = targetsData[key] || targetsData['WINDOWS_LAB'];
-      document.getElementById('inspName').innerText = data.name;
-      document.getElementById('inspIp').innerText = data.ip;
-      document.getElementById('inspStatus').innerText = data.status;
-      document.getElementById('inspAdapter').innerText = data.adapter;
-      document.getElementById('inspPorts').innerText = data.ports;
-      document.getElementById('inspLimits').innerText = data.limits;
-      document.getElementById('inspPurpose').innerText = data.purpose;
+      const data = agentPhasesData[key] || agentPhasesData['discover'];
+      
+      document.querySelectorAll('#phaseNavGrid button').forEach(btn => {
+        btn.className = 'p-3 rounded-xl border border-slate-800 bg-[#0a101d] text-left transition font-mono-tech';
+      });
+      const activeBtn = document.getElementById('phaseBtn-' + key);
+      if (activeBtn) {
+        activeBtn.className = 'p-3 rounded-xl border border-[#FF4655] bg-[#FF4655]/20 text-left transition font-mono-tech';
+      }
+
+      document.getElementById('phaseDetailCard').innerHTML = `
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+          <div>
+            <span class="text-[10px] text-[#FF4655] font-bold">${data.tag}</span>
+            <h3 class="text-base font-bold text-white mt-0.5">${data.title}</h3>
+          </div>
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-[10px]">LIFECYCLE</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed mb-4">${data.desc}</p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+          ${data.indicators.map(ind => `
+            <div class="p-2.5 bg-black/40 border border-slate-800 rounded-lg">
+              <div class="text-[9px] text-slate-400 uppercase">${ind.label}</div>
+              <div class="text-xs text-cyan-300 font-bold mt-0.5">${ind.val}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
     }
 
-    function focusOnMission(targetName, scenarioType) {
+    // Switch Attack Simulator Tabs
+    function switchAttack(atkKey) {
+      playBeep(720, 0.08, 'sine');
+      document.querySelectorAll('.attack-view').forEach(v => v.classList.add('hidden'));
+      document.getElementById('attackView-' + atkKey)?.classList.remove('hidden');
+
+      document.querySelectorAll('#attackTabButtons button').forEach(btn => {
+        btn.className = 'px-4 py-2 rounded-xl text-xs font-mono-tech font-bold bg-slate-800 text-slate-300 hover:text-white transition';
+      });
+      const act = document.getElementById('atBtn-' + atkKey);
+      if (act) {
+        act.className = 'px-4 py-2 rounded-xl text-xs font-mono-tech font-bold bg-[#FF4655] text-white shadow-lg shadow-[#FF4655]/30 transition';
+      }
+    }
+
+    // 01: NETWORK SATURATION (DDOS) SIMULATOR
+    let ddosActive = false;
+    let ddosRate = 120;
+    let ddosVector = 'http2';
+
+    function setDdosVector(vec) {
+      playBeep(520, 0.05, 'sine');
+      ddosVector = vec;
+      ['http2', 'syn', 'udp'].forEach(v => {
+        const b = document.getElementById('vecBtn-' + v);
+        b.className = v === vec 
+          ? 'p-2.5 rounded-lg border border-[#FF4655] bg-[#FF4655]/20 text-left text-white transition'
+          : 'p-2.5 rounded-lg border border-slate-800 bg-black/40 text-left text-slate-300 hover:border-slate-700 transition';
+      });
+    }
+
+    function setDdosRate(rate) {
+      playBeep(620, 0.05, 'sine');
+      ddosRate = rate;
+      [120, 4500, 18500, 52000].forEach(r => {
+        const b = document.getElementById('rateBtn-' + r);
+        b.className = r === rate
+          ? 'p-2 rounded bg-black/40 border border-cyan-500 text-cyan-300 text-left'
+          : 'p-2 rounded bg-black/40 border border-slate-800 text-slate-300 text-left hover:border-slate-700';
+      });
+      updateDdosMeters();
+    }
+
+    function updateDdosMeters() {
+      document.getElementById('ddosRps').innerText = ddosRate.toLocaleString() + ' req/s';
+      const gbps = (ddosRate * 0.0012).toFixed(2);
+      document.getElementById('ddosGbps').innerText = gbps + ' Gbps';
+
+      const ratio = Math.min((ddosRate / 10500) * 100, 100);
+      document.getElementById('ddosProgressBar').style.width = ratio + '%';
+      document.getElementById('ddosRatioText').innerText = ratio.toFixed(1) + '% of threshold';
+
+      if (ddosRate > 10500) {
+        document.getElementById('ddosProgressBar').className = 'bg-[#FF4655] h-full transition-all duration-300';
+        document.getElementById('ddosLat').innerText = '480 ms (DEGRADED)';
+        document.getElementById('ddosLat').className = 'text-xl font-bold text-rose-400 mt-1';
+        document.getElementById('vmCpu').innerText = '94% (SATURATED)';
+        document.getElementById('vmCpu').className = 'text-base text-rose-400 font-bold mt-0.5 animate-pulse';
+        document.getElementById('vmNet').innerText = 'CRITICAL';
+        document.getElementById('vmNet').className = 'text-base text-rose-400 font-bold mt-0.5';
+      } else {
+        document.getElementById('ddosProgressBar').className = 'bg-cyan-500 h-full transition-all duration-300';
+        document.getElementById('ddosLat').innerText = '22 ms';
+        document.getElementById('ddosLat').className = 'text-xl font-bold text-emerald-400 mt-1';
+        document.getElementById('vmCpu').innerText = '18%';
+        document.getElementById('vmCpu').className = 'text-base text-cyan-400 font-bold mt-0.5';
+        document.getElementById('vmNet').innerText = 'NORMAL';
+        document.getElementById('vmNet').className = 'text-base text-emerald-400 font-bold mt-0.5';
+      }
+    }
+
+    async function toggleDdosSimulation() {
+      if (ddosActive) return;
+      ddosActive = true;
+      const btn = document.getElementById('ddosSimToggleBtn');
+      btn.innerText = 'SIMULATING INGRESS FLOOD...';
+      btn.classList.add('opacity-70', 'cursor-not-allowed');
+      document.getElementById('ddosEngineStatus').innerText = 'ACTIVE SATURATION';
+      document.getElementById('ddosEngineStatus').className = 'text-[10px] text-rose-400 font-bold animate-pulse';
+
+      const stream = document.getElementById('ddosStreamBox');
+      stream.innerHTML = '';
+
+      const ts = () => new Date().toISOString().substring(11, 19);
+
+      for (let i = 1; i <= 6; i++) {
+        await sleep(350);
+        playBeep(500 + i * 80, 0.05, 'sawtooth');
+        const d = document.createElement('div');
+        d.innerHTML = `<span class="text-slate-500">[${ts()}]</span> <span class="text-[#FF4655] font-bold">[${ddosVector.toUpperCase()}]</span> Ingress burst #${i}: <span class="text-white">${ddosRate.toLocaleString()} req/s</span> dispatched from 36 synthetic generator nodes to WIN-TARGET-01:443`;
+        stream.appendChild(d);
+        stream.scrollTop = stream.scrollHeight;
+      }
+
+      await sleep(400);
+      playBeep(980, 0.15, 'sine');
+      const fin = document.createElement('div');
+      fin.className = 'text-emerald-400 font-bold pt-1';
+      fin.innerHTML = `[${ts()}] ✔ Bounded simulation burst finished (Total simulated requests: ${(ddosRate * 3).toLocaleString()}). Server telemetry logged.`;
+      stream.appendChild(fin);
+
+      ddosActive = false;
+      btn.innerText = '▶ INITIATE INGRESS SATURATION';
+      btn.classList.remove('opacity-70', 'cursor-not-allowed');
+      document.getElementById('ddosEngineStatus').innerText = 'STANDBY';
+      document.getElementById('ddosEngineStatus').className = 'text-[10px] text-slate-500 font-bold';
+    }
+
+    // 02: AUTHENTICATION PROBING SIMULATOR
+    let authProbing = false;
+
+    async function runAuthProbingLoop() {
+      if (authProbing) return;
+      authProbing = true;
+      const btn = document.getElementById('authProbeBtn');
+      btn.innerText = 'PROBING LSA SURFACE...';
+      btn.classList.add('opacity-70', 'cursor-not-allowed');
+      document.getElementById('authProbeStatus').innerText = 'EVALUATING PASSWORDS';
+      document.getElementById('authProbeStatus').className = 'text-[10px] text-amber-400 font-bold animate-pulse';
+
+      const table = document.getElementById('authAttemptsTable');
+      table.innerHTML = '';
+
+      const candidates = ['123456', 'password', 'welcome1', 'admin2024', 'Northstar2024!', 'Autumn2024!'];
+      let fails = 0;
+
+      for (let i = 0; i < candidates.length; i++) {
+        await sleep(400);
+        fails++;
+        document.getElementById('authProbeCount').innerText = `${i+1} / 15`;
+        document.getElementById('authFailCount').innerText = fails;
+
+        playBeep(700 + i * 50, 0.05, 'triangle');
+        const row = document.createElement('div');
+        row.className = 'p-2 rounded bg-black/50 border border-slate-800 flex justify-between items-center';
+        row.innerHTML = `
+          <div>
+            <span class="text-rose-400 font-bold">[EVENT 4625]</span>
+            <span class="text-slate-300 ml-1">lab-user : "${candidates[i]}"</span>
+          </div>
+          <span class="text-rose-400 text-[10px] font-bold">STATUS_LOGON_FAILURE (401)</span>
+        `;
+        table.appendChild(row);
+        table.scrollTop = table.scrollHeight;
+      }
+
+      await sleep(300);
+      playBeep(240, 0.3, 'sawtooth');
+      const lockAlert = document.createElement('div');
+      lockAlert.className = 'p-2 rounded bg-amber-950/60 border border-amber-500 text-amber-300 font-bold';
+      lockAlert.innerHTML = `⚠️ JITTER ENGAGED: Threshold alert (5 fails in 3s). Pausing candidate stream for 1.2s to evade Windows Account Lockout Policy.`;
+      table.appendChild(lockAlert);
+      table.scrollTop = table.scrollHeight;
+
+      authProbing = false;
+      btn.innerText = '▶ EXECUTE PROBING PIPELINE';
+      btn.classList.remove('opacity-70', 'cursor-not-allowed');
+      document.getElementById('authProbeStatus').innerText = 'IDLE';
+      document.getElementById('authProbeStatus').className = 'text-[10px] text-slate-500 font-bold';
+    }
+
+    // 03: PHISHING SIMULATOR
+    function toggleEmailHeaders() {
+      const box = document.getElementById('emailHeadersBox');
+      box.classList.toggle('hidden');
+    }
+
+    function onPhishSelectChange() {
+      playBeep(520, 0.05, 'sine');
+    }
+
+    function deliverPhishingEmail() {
       playBeep(780, 0.08, 'sine');
-      document.getElementById('cockpitTarget').value = targetName;
-      document.getElementById('cockpitScenario').value = scenarioType;
-      document.getElementById('mission-briefing').scrollIntoView({ behavior: 'smooth' });
+      speakText("Educational spear phishing pretext delivered to synthetic recipient lab-user.");
+      alert("Pretext successfully generated and delivered to synthetic mailbox lab-user@northstar.local. No real email infrastructure was contacted.");
     }
 
-    function expandAllHandbook() {
-      document.querySelectorAll('#masterHandbook details').forEach(d => d.open = true);
+    function triggerSandboxWarning() {
+      playBeep(180, 0.25, 'sawtooth');
+      document.getElementById('sandboxWarningModal').classList.remove('hidden');
+      speakText("Notice: Mock URL clicked. Diverting safely to awareness landing page.");
+    }
+
+    // 04: WIRELESS SIMULATOR
+    async function runWifiRadarScan() {
+      playBeep(680, 0.08, 'sine');
+      document.getElementById('wifiRadarStatus').innerText = 'SWEEPING AIRSPACE...';
+      document.getElementById('wifiRadarStatus').className = 'text-[10px] text-emerald-400 font-bold animate-pulse';
+
+      const log = document.getElementById('wifiAirspaceLog');
+      log.innerHTML = '<div>Listening for synthetic 802.11 beacon frames on channels 1, 6, 11...</div>';
+
+      await sleep(600);
+      log.innerHTML = `<div class="text-cyan-300">• [BEACON] SSID: Corp_Secure | BSSID: 00:14:22:01:23:45 | Ch: 6 | -42 dBm</div>`;
+
+      await sleep(600);
+      log.innerHTML += `<div class="text-emerald-300">• [BEACON] SSID: Guest_WiFi | BSSID: 00:14:22:01:23:46 | Ch: 11 | -58 dBm</div>`;
+
+      await sleep(800);
+      document.getElementById('apBlipRogue').classList.remove('hidden');
+      playBeep(220, 0.4, 'sawtooth');
+      log.innerHTML += `
+        <div class="text-rose-400 font-bold animate-pulse">• [WIDS ALERT] ROGUE EVIL TWIN DETECTED: SSID 'Corp_Secure' spoofed on BSSID 00:14:22:FF:99:11!</div>
+        <div class="text-slate-400 text-[10px]">Deauth frame injection captured: 14 frames/s. simulated: true recorded.</div>
+      `;
+      document.getElementById('wifiRadarStatus').innerText = 'ROGUE DETECTED';
+      document.getElementById('wifiRadarStatus').className = 'text-[10px] text-rose-400 font-bold';
+    }
+
+    function expandAllSections() {
+      document.querySelectorAll('#fullHandbookAccordion details').forEach(d => d.open = true);
       playBeep(880, 0.08, 'sine');
     }
 
-    // LIVE DUAL TERMINAL RED vs BLUE ENGINE
-    let missionRunning = false;
-
-    async function runMissionLive() {
-      if (missionRunning) return;
-      missionRunning = true;
-      const btn = document.getElementById('missionStartBtn');
-      btn.innerText = 'SIMULATING ATTACK...';
-      btn.classList.add('opacity-70', 'cursor-not-allowed');
-
-      const scenario = document.getElementById('cockpitScenario').value;
-      const target = document.getElementById('cockpitTarget').value;
-      const count = parseInt(document.getElementById('burstSlider').value);
-      const redTerm = document.getElementById('redTeamTerminal');
-      const blueTerm = document.getElementById('blueTeamTerminal');
-
-      function appendRed(msg, cls = 'text-slate-300') {
-        const line = document.createElement('div');
-        const ts = new Date().toISOString().substring(11, 19);
-        line.className = cls;
-        line.innerHTML = `<span class="text-rose-500 font-tech">[${ts}] [RED]</span> ${msg}`;
-        redTerm.appendChild(line);
-        redTerm.scrollTop = redTerm.scrollHeight;
-      }
-
-      function appendBlue(msg, cls = 'text-slate-300') {
-        const line = document.createElement('div');
-        const ts = new Date().toISOString().substring(11, 19);
-        line.className = cls;
-        line.innerHTML = `<span class="text-cyan-400 font-tech">[${ts}] [BLUE]</span> ${msg}`;
-        blueTerm.appendChild(line);
-        blueTerm.scrollTop = blueTerm.scrollHeight;
-      }
-
-      appendRed(`Initiating Red Team Assessment: Target=${target}, Count=${count}`, 'text-rose-400 font-bold');
-      playBeep(440, 0.1, 'sawtooth');
-
-      // Check for WAN target rejection
-      if (target === 'UNAPPROVED_WAN') {
-        await sleep(500);
-        playBeep(180, 0.4, 'sawtooth');
-        appendRed(`[SAFETY GATEWAY REJECT] Target '198.51.100.1' is outside the authorized lab allowlist!`, 'text-rose-400 font-bold');
-        appendBlue(`[GATEWAY FIREWALL] Blocked unauthorized outbound request. Security incident AUD-104 logged.`, 'text-amber-400 font-bold');
-        speakText("Alert. Target not allowlisted. Simulation halted by safety gateway.");
-        finishMission();
-        return;
-      }
-
-      // Check count ceiling
-      if (count > 100) {
-        await sleep(500);
-        playBeep(180, 0.4, 'sawtooth');
-        appendRed(`[SAFETY CEILING EXCEEDED] Requested count ${count} exceeds safety policy limit (100)!`, 'text-rose-400 font-bold');
-        appendBlue(`[RATE LIMITER] DoS ceiling protection engaged. Request dropped before execution.`, 'text-amber-400 font-bold');
-        speakText("Warning. Parameter ceiling exceeded. Operation refused.");
-        finishMission();
-        return;
-      }
-
-      // Legitimate Mission Flow
-      speakText("Mission authorized by safety gateway. Commencing synthetic red team emulation.");
-      await sleep(400);
-      appendRed(`AI Planner generated structured plan: REQ-${Math.floor(Math.random()*900+100)}. Gateway status: APPROVED.`, 'text-emerald-400');
-      appendBlue(`SIEM Sensor: Workstation ${target} baseline audit logging active.`, 'text-slate-400');
-
-      const accounts = ['svc_backup', 'admin_corp', 'sql_db_user', 'helpdesk_op', 'sys_test'];
-
-      for (let i = 1; i <= Math.min(count, 6); i++) {
-        await sleep(350);
-        const acct = accounts[i % accounts.length];
-        playBeep(600 + i * 60, 0.05, 'triangle');
-        appendRed(`[ATTACK T1110] Emitting logon failure burst #${i} ➔ user='${acct}' against ${target}`, 'text-cyan-300');
-
-        await sleep(200);
-        playBeep(900 + i * 40, 0.05, 'sine');
-        appendBlue(`[EVENT 4625] Security Log: Failed logon for '${acct}' from 192.168.56.5 (simulated=true)`, 'text-rose-300 font-semibold');
-      }
-
-      await sleep(500);
-      playBeep(1200, 0.2, 'sine');
-      appendBlue(`🚨 [SIEM ALERT: KERBEROS_SPRAY_DETECTED] Exceeded 5 failures in 2s! TTD: 1.14s`, 'text-rose-400 font-bold');
-      appendRed(`[MISSION COMPLETE] Observation Engine recorded metrics into SQLite. AI Planner recommending STOP.`, 'text-emerald-400 font-bold');
-      speakText("Simulation complete. Telemetry ingested into observation database.");
-
-      finishMission();
-    }
-
-    function finishMission() {
-      missionRunning = false;
-      const btn = document.getElementById('missionStartBtn');
-      btn.innerText = '⚡ EXECUTE SIMULATION';
-      btn.classList.remove('opacity-70', 'cursor-not-allowed');
-    }
-
-    function triggerEmergencyKillSwitch() {
-      playBeep(200, 0.5, 'sawtooth');
-      speakText("Emergency kill switch engaged. Terminating all active processes.");
-      const redTerm = document.getElementById('redTeamTerminal');
-      const blueTerm = document.getElementById('blueTeamTerminal');
-      const line = `<div class="p-2 bg-rose-950 border border-rose-500 text-rose-300 font-bold my-1">🛑 [EMERGENCY KILL SWITCH TRIPPED] Cancellation token set. Running adapters cancelled. Sockets cleared.</div>`;
-      redTerm.innerHTML += line;
-      blueTerm.innerHTML += line;
-      redTerm.scrollTop = redTerm.scrollHeight;
-      blueTerm.scrollTop = blueTerm.scrollHeight;
-      finishMission();
-    }
-
     function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+      return new Promise(r => setTimeout(r, ms));
     }
+
+    // Initialize Phase 1
+    inspectPhase('discover');
+    updateDdosMeters();
   </script>
 </body>
 </html>
