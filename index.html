@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHAKRAVYUH v4.0 — AI-Powered Red Team Simulation Platform</title>
+  <meta name="description" content="Complete Master Handbook & Technical Architecture v4.0 for CHAKRAVYUH - AI-Powered Red Team Simulation Platform.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Mermaid.js for Dynamic Architecture Diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+          colors: {
+            cyber: {
+              bg: '#080d1a',
+              card: '#0f172a',
+              border: '#1e293b',
+              cyan: '#06b6d4',
+              crimson: '#ef4444',
+              amber: '#f59e0b',
+              emerald: '#10b981',
+              violet: '#8b5cf6',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #080d1a;
+      color: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+    }
+    pre, code {
+      font-family: 'Fira Code', monospace;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #06b6d4;
+    }
+    .mermaid {
+      background: transparent !important;
+      display: flex;
+      justify-content: center;
+    }
+    .glow-cyan {
+      box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.25);
+    }
+    .glow-crimson {
+      box-shadow: 0 0 25px -5px rgba(239, 68, 68, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-[#080d1a] text-slate-100 antialiased selection:bg-cyan-500 selection:text-black">
+
+  <!-- TOP PROGRESS BAR -->
+  <div id="scrollProgressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-emerald-500 z-50 w-0 transition-all duration-150"></div>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="sticky top-0 z-40 bg-[#080d1a]/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-black text-lg shadow-lg shadow-cyan-500/20">
+          च
+        </div>
+        <div>
+          <span class="font-extrabold text-lg tracking-wider text-white">CHAKRAVYUH</span>
+          <span class="ml-2 text-xs font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/60">v4.0 Spec</span>
+        </div>
+      </div>
+
+      <!-- Quick Nav Buttons & Search Trigger -->
+      <div class="flex items-center gap-3">
+        <div class="relative hidden md:block w-64">
+          <input type="text" id="searchInput" placeholder="Search handbook (e.g. Locust, Kill Switch)..." 
+                 class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono">
+          <span class="absolute right-2.5 top-2 text-[10px] text-slate-500 font-mono">⌘K</span>
+        </div>
+        <a href="#interactive-simulator" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500 hover:bg-cyan-400 text-black transition font-mono">
+          <span>⚡ Live Demo</span>
+        </a>
+        <a href="#checklist" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition font-mono">
+          <span>✓ Checklist</span>
+        </a>
+        <a href="https://github.com" target="_blank" rel="noopener" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="GitHub Repository">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER: SIDEBAR + CONTENT -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex gap-8">
+    
+    <!-- DESKTOP STICKY SIDEBAR -->
+    <aside class="hidden lg:block w-72 shrink-0">
+      <div class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 space-y-6">
+        <div>
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 mb-3">Contents by Part</h4>
+          <nav class="space-y-1 text-xs font-medium" id="sidebarNav">
+            <a href="#part-1" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 1: Project Foundation</a>
+            <a href="#part-2" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 2: Laboratory Environment</a>
+            <a href="#part-3" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 3: System Architecture</a>
+            <a href="#part-4" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 4: Centralized AI Planner</a>
+            <a href="#part-5" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 5: Safety Gateway</a>
+            <a href="#part-6" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 6: Simulation Modules (4)</a>
+            <a href="#part-7" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 7: Common Contracts</a>
+            <a href="#part-8" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 8: Class Architecture</a>
+            <a href="#part-9" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 9: Execution Lifecycle</a>
+            <a href="#part-10" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 10: API Design</a>
+            <a href="#part-11" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 11: Database Architecture</a>
+            <a href="#part-12" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 12: Observation & Feedback</a>
+            <a href="#part-13" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 13: Folder Structure</a>
+            <a href="#part-14" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 14: Implementation Roadmap</a>
+            <a href="#part-15" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 15: Testing Architecture</a>
+            <a href="#part-16" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 16: Deployment & Demo</a>
+            <a href="#part-17" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 17: Reality Check (AI vs Code)</a>
+            <a href="#part-18" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 18: Reviewer Q&A (15)</a>
+            <a href="#part-19" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 19: Trade-offs & Decisions</a>
+            <a href="#part-20" class="block px-2.5 py-1.5 rounded hover:bg-slate-800 text-slate-300 hover:text-cyan-400 transition">Part 20: Acceptance Checklist</a>
+          </nav>
+        </div>
+
+        <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-900/60 text-xs text-slate-400 space-y-2">
+          <div class="font-mono font-semibold text-slate-200">Execution Guarantees</div>
+          <div>✓ Isolated Lab Only</div>
+          <div>✓ No Arbitrary Shells</div>
+          <div>✓ Strict Target Allowlist</div>
+          <div>✓ Cooperative Kill Switch</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 min-w-0 space-y-16">
+      
+      <!-- HERO BANNER -->
+      <section class="p-6 sm:p-10 rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-[#0b1329] to-slate-900 relative overflow-hidden glow-cyan">
+        <div class="absolute -top-12 -right-12 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-12 -left-12 w-80 h-80 bg-crimson-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 space-y-4">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase tracking-wider">Master Specification</span>
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30 uppercase tracking-wider">Version 4.0</span>
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-wider">GitHub Pages Ready</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white">
+            CHAKRAVYUH
+          </h1>
+          <p class="text-xl sm:text-2xl font-light text-cyan-400 font-mono">
+            AI-Powered Red Team Simulation Platform
+          </p>
+          <p class="text-slate-400 text-sm sm:text-base max-w-3xl leading-relaxed">
+            A centralized AI planning and safety-bounded execution architecture for controlled adversarial simulations in isolated cybersecurity laboratories.
+          </p>
+
+          <!-- Core Motto Box -->
+          <div class="mt-6 p-4 rounded-xl border border-cyan-500/30 bg-black/40 text-sm">
+            <span class="text-xs font-mono uppercase tracking-widest text-cyan-400 font-semibold block mb-1">Foundational Golden Rule:</span>
+            <span class="text-cyan-300 font-bold">AI plans.</span> ➔ 
+            <span class="text-indigo-300 font-bold">Python validates.</span> ➔ 
+            <span class="text-rose-400 font-bold">The Safety Gateway authorizes.</span> ➔ 
+            <span class="text-emerald-300 font-bold">Adapters execute.</span> ➔ 
+            <span class="text-amber-300 font-bold">The Observation Engine measures.</span>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="pt-2 flex flex-wrap gap-3">
+            <a href="#interactive-simulator" class="px-4 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs uppercase tracking-wider font-mono transition shadow-lg shadow-cyan-500/20">
+              ⚡ Open Interactive Pipeline
+            </a>
+            <a href="#part-3" class="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs font-mono transition">
+              Explore Architecture
+            </a>
+            <a href="#part-18" class="px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs font-mono transition">
+              Technical Q&A
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIVE INTERACTIVE SIMULATOR (FEATURE HIGHLIGHT) -->
+      <section id="interactive-simulator" class="p-6 sm:p-8 rounded-2xl border border-cyan-500/40 bg-slate-900/90 shadow-2xl relative">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4 mb-6">
+          <div>
+            <span class="text-xs font-mono uppercase text-cyan-400 font-bold tracking-wider">Live Platform Simulator</span>
+            <h2 class="text-2xl font-bold text-white mt-1">Step-by-Step Simulation Flow</h2>
+          </div>
+          <button onclick="resetInteractivePipeline()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono border border-slate-700">
+            Reset Flow ↺
+          </button>
+        </div>
+
+        <!-- 5 Interactive Pipeline Steps -->
+        <div class="grid grid-cols-5 gap-2 mb-6">
+          <div id="sim-step-tab-1" class="h-2 rounded-full bg-cyan-500 transition-all"></div>
+          <div id="sim-step-tab-2" class="h-2 rounded-full bg-slate-800 transition-all"></div>
+          <div id="sim-step-tab-3" class="h-2 rounded-full bg-slate-800 transition-all"></div>
+          <div id="sim-step-tab-4" class="h-2 rounded-full bg-slate-800 transition-all"></div>
+          <div id="sim-step-tab-5" class="h-2 rounded-full bg-slate-800 transition-all"></div>
+        </div>
+
+        <div id="simDisplayBox" class="p-5 rounded-xl border border-slate-800 bg-black/60 min-h-[220px]">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <span id="simStepLabel" class="text-xs font-mono text-slate-400">Step 1 of 5</span>
+          <button id="simNextBtn" onclick="nextInteractiveStep()" class="px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs uppercase tracking-wider font-mono transition">
+            Proceed to Step 2 ➔
+          </button>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 1: PROJECT FOUNDATION -->
+      <!-- ========================================== -->
+      <section id="part-1" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 1</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Project Foundation</h2>
+        </div>
+
+        <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+          <h3 class="text-lg font-bold text-white">1.1 Project Overview</h3>
+          <p>
+            CHAKRAVYUH is an AI-powered Red Team simulation platform designed to coordinate controlled cybersecurity experiments through a centralized AI Planner.
+          </p>
+          <p>
+            The platform allows a user to provide a security-testing objective. The AI Planner interprets the objective, selects an approved scenario, proposes structured execution parameters, and evaluates the results returned by the execution system.
+          </p>
+          <p>
+            The actual simulation work is performed by controlled Python adapters. The AI does not independently execute arbitrary operating-system commands.
+          </p>
+          <p class="font-semibold text-slate-200">The platform initially supports four simulation categories:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div class="p-3.5 rounded-lg border border-slate-800 bg-slate-900/50">
+              <span class="text-cyan-400 font-mono font-bold text-xs">01</span>
+              <div class="font-bold text-slate-200 mt-1">Authentication attack simulation</div>
+              <p class="text-xs text-slate-400 mt-1">Synthetic Windows Event telemetry (4624, 4625, 4771) for SIEM testing without password theft.</p>
+            </div>
+            <div class="p-3.5 rounded-lg border border-slate-800 bg-slate-900/50">
+              <span class="text-amber-400 font-mono font-bold text-xs">02</span>
+              <div class="font-bold text-slate-200 mt-1">Service-load simulation</div>
+              <p class="text-xs text-slate-400 mt-1">Bounded Locust workload testing measuring RPS, error rates, and p95 latency on local endpoints.</p>
+            </div>
+            <div class="p-3.5 rounded-lg border border-slate-800 bg-slate-900/50">
+              <span class="text-purple-400 font-mono font-bold text-xs">03</span>
+              <div class="font-bold text-slate-200 mt-1">Phishing-awareness simulation</div>
+              <p class="text-xs text-slate-400 mt-1">Educational mock templates and synthetic mailboxes with zero credential harvesting.</p>
+            </div>
+            <div class="p-3.5 rounded-lg border border-slate-800 bg-slate-900/50">
+              <span class="text-emerald-400 font-mono font-bold text-xs">04</span>
+              <div class="font-bold text-slate-200 mt-1">Wireless-security simulation</div>
+              <p class="text-xs text-slate-400 mt-1">Synthetic 802.11 beacon/deauth event records without physical radio transmission.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+          <h3 class="text-lg font-bold text-white">1.2 Project Objectives</h3>
+          <ul class="list-disc list-inside space-y-1.5 text-slate-300">
+            <li>Develop a centralized AI-based planning system.</li>
+            <li>Coordinate multiple Red Team simulation modules.</li>
+            <li>Implement deterministic execution and safety validation.</li>
+            <li>Support structured experiment configuration.</li>
+            <li>Collect and analyze simulation results.</li>
+            <li>Maintain an auditable execution history.</li>
+            <li>Provide a dashboard for experiment management.</li>
+            <li>Demonstrate the distinction between AI reasoning and conventional automation.</li>
+          </ul>
+        </div>
+
+        <div class="space-y-4 text-slate-300 text-sm sm:text-base leading-relaxed">
+          <h3 class="text-lg font-bold text-white">1.3 Project Scope</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl border border-emerald-900/40 bg-emerald-950/20">
+              <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400">Included Scope</span>
+              <ul class="mt-2 space-y-1 text-xs sm:text-sm text-slate-300">
+                <li>✓ AI-assisted scenario selection</li>
+                <li>✓ Structured simulation planning</li>
+                <li>✓ Four controlled simulation modules</li>
+                <li>✓ Target allowlisting & Parameter validation</li>
+                <li>✓ Execution limits & Cooperative Emergency Stop</li>
+                <li>✓ Result collection, observation feedback & SQLite history</li>
+                <li>✓ Streamlit dashboard visualization</li>
+              </ul>
+            </div>
+            <div class="p-4 rounded-xl border border-rose-900/40 bg-rose-950/20">
+              <span class="text-xs font-mono font-bold uppercase tracking-wider text-rose-400">Excluded (Out of Scope)</span>
+              <ul class="mt-2 space-y-1 text-xs sm:text-sm text-slate-300">
+                <li>✕ Attacks against public or unauthorized systems</li>
+                <li>✕ Unrestricted network flooding (DDoS)</li>
+                <li>✕ Real credential theft & actual password harvesting</li>
+                <li>✕ Unauthorized physical wireless disruption</li>
+                <li>✕ Uncontrolled malware deployment</li>
+                <li>✕ Autonomous execution of arbitrary OS commands</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 2: LABORATORY ENVIRONMENT -->
+      <!-- ========================================== -->
+      <section id="part-2" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 2</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Laboratory Environment</h2>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm border border-slate-800 rounded-lg overflow-hidden">
+            <thead class="bg-slate-900 font-mono text-cyan-400">
+              <tr>
+                <th class="p-3 border-b border-slate-800">Machine</th>
+                <th class="p-3 border-b border-slate-800">Role & Purpose</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-slate-300">
+              <tr>
+                <td class="p-3 font-semibold text-white">Kali Linux VM</td>
+                <td class="p-3">Red Team simulation environment</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">Windows VM</td>
+                <td class="p-3">Authorized authentication-testing target</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">Development Machine</td>
+                <td class="p-3">Python development, Streamlit dashboard, SQLite storage</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 text-xs sm:text-sm text-slate-300 space-y-2">
+          <h4 class="font-bold text-white font-mono uppercase text-xs text-amber-400">Network Isolation Rules</h4>
+          <p>• Isolated host-only virtual network for all laboratory communication.</p>
+          <p>• No public targets; no bridging to external WAN.</p>
+          <p>• Explicitly configured target IP addresses; only approved ports and services allowed.</p>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 3: COMPLETE SYSTEM ARCHITECTURE -->
+      <!-- ========================================== -->
+      <section id="part-3" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 3</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Complete System Architecture</h2>
+        </div>
+
+        <p class="text-slate-300 text-sm leading-relaxed">
+          CHAKRAVYUH follows a modular 7-layer architecture. Below is the rendered system architecture topology:
+        </p>
+
+        <!-- Dynamic Mermaid Diagram -->
+        <div class="p-6 rounded-2xl border border-slate-800 bg-black/60">
+          <div class="mermaid">
+flowchart TD
+    U[User] --> D[Streamlit Dashboard]
+    D --> B[Python Backend]
+    B --> C[Configuration Manager]
+    B --> AI[Central AI Planner]
+
+    AI --> V[Structured Output Validator]
+    V --> S[Safety Gateway]
+
+    S -->|Approved| DIS[Scenario Dispatcher]
+    S -->|Rejected| LOG[Audit Logger]
+
+    DIS --> EX[Execution Engine]
+
+    EX --> A1[Authentication Adapter]
+    EX --> A2[Service Load Adapter]
+    EX --> A3[Phishing Adapter]
+    EX --> A4[Wireless Adapter]
+
+    A1 --> O[Observation Engine]
+    A2 --> O
+    A3 --> O
+    A4 --> O
+
+    O --> CXT[Context Manager]
+    CXT --> AI
+
+    O --> DB[(SQLite Database)]
+    LOG --> DB
+    DB --> D
+          </div>
+        </div>
+
+        <!-- 7 Layers Breakdown -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+          <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/50">
+            <span class="text-cyan-400 font-mono font-bold">Layer 1: Presentation Layer</span>
+            <p class="text-slate-300 mt-1">Streamlit Dashboard: Accepts objectives, displays status/metrics, and controls emergency stop.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/50">
+            <span class="text-indigo-400 font-mono font-bold">Layer 2: Backend & Session Layer</span>
+            <p class="text-slate-300 mt-1">Python Backend: Manages experiment sessions, coordinates services, handles exceptions.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/50">
+            <span class="text-purple-400 font-mono font-bold">Layer 3: AI Planning Layer</span>
+            <p class="text-slate-300 mt-1">Central AI Planner, Context Manager, Decision Engine, and LLM Client.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-rose-800 bg-rose-950/20">
+            <span class="text-rose-400 font-mono font-bold">Layer 4: Validation & Safety Layer</span>
+            <p class="text-slate-300 mt-1">Structured Output Validator, Safety Gateway (Allowlists, Rate Limits), and Kill Switch.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/50">
+            <span class="text-emerald-400 font-mono font-bold">Layer 5: Scenario & Execution Layer</span>
+            <p class="text-slate-300 mt-1">Scenario Dispatcher & Execution Engine managing the 4 simulation adapters.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/50">
+            <span class="text-amber-400 font-mono font-bold">Layer 6: Observation & Analysis Layer</span>
+            <p class="text-slate-300 mt-1">Observation Engine & Result Analyzer collecting telemetry, normalizing metrics.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/50 md:col-span-2">
+            <span class="text-slate-400 font-mono font-bold">Layer 7: Persistence & Audit Layer</span>
+            <p class="text-slate-300 mt-1">SQLite Database & Audit Logger: Immutable storage of experiments, requests, runs, events, and rejections.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 4: CENTRALIZED AI PLANNER -->
+      <!-- ========================================== -->
+      <section id="part-4" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 4</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Centralized AI Planner</h2>
+        </div>
+
+        <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+          <h3 class="text-lg font-bold text-white">4.1 Why One Centralized Planner?</h3>
+          <p>
+            CHAKRAVYUH uses <strong>one centralized AI Planner</strong> rather than four independent AI agents. This guarantees consistent decision-making, centralized policy enforcement, shared experiment context, simpler testing, and uniform audit trails.
+          </p>
+
+          <h3 class="text-lg font-bold text-white mt-4">4.3 AI Request Contract Schema</h3>
+          <div class="p-4 rounded-xl border border-slate-800 bg-black/60 font-mono text-xs text-slate-300 overflow-x-auto">
+            <pre><code>{
+  "request_id": "REQ-001",
+  "experiment_id": "EXP-001",
+  "scenario": "authentication",
+  "profile": "controlled_failure_simulation",
+  "target_id": "WINDOWS-LAB-01",
+  "parameters": {
+    "event_count": 20
+  },
+  "reasoning_summary": "Selected the approved authentication simulation profile.",
+  "next_action": "execute"
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 5: SAFETY GATEWAY -->
+      <!-- ========================================== -->
+      <section id="part-5" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 5</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Safety Gateway & Kill Switch</h2>
+        </div>
+
+        <p class="text-slate-300 text-sm leading-relaxed">
+          The Safety Gateway is the deterministic authorization boundary between AI planning and simulation execution. It must not rely on the AI model to decide whether an action is safe.
+        </p>
+
+        <!-- 10-Step Validation Sequence -->
+        <div class="p-5 rounded-xl border border-rose-900/40 bg-rose-950/10">
+          <h4 class="font-bold text-rose-400 font-mono text-xs uppercase mb-3">10-Point Sequential Gateway Verification</h4>
+          <ol class="list-decimal list-inside space-y-1 text-xs sm:text-sm text-slate-300 font-mono">
+            <li>Confirm request structure & Pydantic validation</li>
+            <li>Confirm scenario category is enabled</li>
+            <li>Confirm target identifier exists in database</li>
+            <li>Confirm target is allowlisted for isolated subnet</li>
+            <li>Validate parameter ranges against safety policy</li>
+            <li>Check resource limits (memory/concurrency)</li>
+            <li>Check execution rate limits</li>
+            <li>Check experiment state validity</li>
+            <li>Return deterministic approval or rejection</li>
+            <li>Record decision immutably in SQLite audit log</li>
+          </ol>
+        </div>
+
+        <!-- Interactive Safety Tester Widget -->
+        <div class="p-5 rounded-xl border border-slate-800 bg-slate-900/60">
+          <h4 class="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider mb-2">Interactive Gateway Authorization Sandbox</h4>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <button onclick="testGatewayRule('pass')" class="px-3 py-1.5 rounded bg-emerald-950 hover:bg-emerald-900 border border-emerald-700 text-emerald-300 text-xs font-mono">
+              Test: Approved Request (Target: WINDOWS-LAB-01, 25 events)
+            </button>
+            <button onclick="testGatewayRule('target_fail')" class="px-3 py-1.5 rounded bg-rose-950 hover:bg-rose-900 border border-rose-700 text-rose-300 text-xs font-mono">
+              Test: Unlisted Target (Target: 142.250.190.46)
+            </button>
+            <button onclick="testGatewayRule('limit_fail')" class="px-3 py-1.5 rounded bg-rose-950 hover:bg-rose-900 border border-rose-700 text-rose-300 text-xs font-mono">
+              Test: Parameter Overcap (Event Count: 25,000)
+            </button>
+          </div>
+          <div id="gatewayConsole" class="p-3 bg-black rounded border border-slate-800 text-xs font-mono text-slate-300">
+            Click one of the buttons above to test the deterministic gateway checks.
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 6: RED TEAM SIMULATION MODULES -->
+      <!-- ========================================== -->
+      <section id="part-6" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 6</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Red Team Simulation Modules</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- 6.1 -->
+          <div class="p-5 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3">
+            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">6.1</span>
+            <h3 class="text-lg font-bold text-white">Authentication Simulation</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Generates synthetic logon activity records (Event IDs 4624, 4625, 4771, 4776) simulating RDP brute force, password spraying, and credential stuffing.
+            </p>
+            <div class="p-2.5 rounded bg-black/50 text-[11px] font-mono text-cyan-300 border border-slate-800">
+              simulated: true | Max Events: 100 | Duration: &lt;60s
+            </div>
+          </div>
+
+          <!-- 6.2 -->
+          <div class="p-5 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3">
+            <span class="px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800 text-xs font-mono">6.2</span>
+            <h3 class="text-lg font-bold text-white">Service-Load Simulation</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Measures local test service latency, error rates, and p95 response times under bounded Locust workload. Zero public traffic.
+            </p>
+            <div class="p-2.5 rounded bg-black/50 text-[11px] font-mono text-amber-300 border border-slate-800">
+              Locust Adapter | Max Users: 5 | Localhost only
+            </div>
+          </div>
+
+          <!-- 6.3 -->
+          <div class="p-5 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3">
+            <span class="px-2 py-0.5 rounded bg-purple-950 text-purple-400 border border-purple-800 text-xs font-mono">6.3</span>
+            <h3 class="text-lg font-bold text-white">Phishing-Awareness Simulation</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Generates educational mock templates delivered to synthetic mailboxes. Measures landing page visits. Real credential collection is completely disabled.
+            </p>
+            <div class="p-2.5 rounded bg-black/50 text-[11px] font-mono text-purple-300 border border-slate-800">
+              credential_collection: false | Synthetic Inboxes
+            </div>
+          </div>
+
+          <!-- 6.4 -->
+          <div class="p-5 rounded-xl border border-slate-800 bg-slate-900/50 space-y-3">
+            <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-mono">6.4</span>
+            <h3 class="text-lg font-bold text-white">Wireless-Security Simulation</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Produces synthetic 802.11 management frame events (Evil Twin, Rogue AP, Deauth frames) for SIEM detection validation without transmitting radio signals.
+            </p>
+            <div class="p-2.5 rounded bg-black/50 text-[11px] font-mono text-emerald-300 border border-slate-800">
+              mode: synthetic_only | No physical RF broadcast
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 7 & 8: CONTRACTS & CLASS ARCHITECTURE -->
+      <!-- ========================================== -->
+      <section id="part-7" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 7 & 8</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Software Contracts & Class Architecture</h2>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-slate-800 bg-black/60">
+          <div class="mermaid">
+classDiagram
+    class AIPlanner
+    class LLMClient
+    class ContextManager
+    class DecisionEngine
+    class OutputValidator
+    class SafetyGateway
+    class ScenarioDispatcher
+    class ExecutionEngine
+    class BaseAdapter
+    class ObservationEngine
+    class AuditLogger
+    class DatabaseManager
+
+    AIPlanner --> LLMClient
+    AIPlanner --> ContextManager
+    AIPlanner --> DecisionEngine
+    AIPlanner --> OutputValidator
+    OutputValidator --> SafetyGateway
+    SafetyGateway --> ScenarioDispatcher
+    ScenarioDispatcher --> ExecutionEngine
+    ExecutionEngine --> BaseAdapter
+    ExecutionEngine --> AuditLogger
+    BaseAdapter --> ObservationEngine
+    ObservationEngine --> ContextManager
+    ObservationEngine --> DatabaseManager
+    AuditLogger --> DatabaseManager
+          </div>
+        </div>
+
+        <!-- Base Adapter Contract -->
+        <div class="p-4 rounded-xl border border-slate-800 bg-black/60 text-xs font-mono text-slate-300 overflow-x-auto">
+          <div class="text-cyan-400 font-bold mb-2"># Unified BaseAdapter Interface (red_team/base_adapter.py)</div>
+<pre><code>from abc import ABC, abstractmethod
+
+class BaseAdapter(ABC):
+    @abstractmethod
+    def validate_config(self, config: dict) -> bool:
+        pass
+
+    @abstractmethod
+    def execute(self, request, cancellation_token) -> dict:
+        pass
+
+    @abstractmethod
+    def get_status(self, run_id: str) -> dict:
+        pass
+
+    @abstractmethod
+    def cancel(self, run_id: str):
+        pass
+
+    @abstractmethod
+    def cleanup(self, run_id: str):
+        pass</code></pre>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 9: EXECUTION LIFECYCLE & STATES -->
+      <!-- ========================================== -->
+      <section id="part-9" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 9</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Execution Lifecycle & State Machine</h2>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-slate-800 bg-black/60">
+          <div class="mermaid">
+stateDiagram-v2
+    [*] --> CREATED
+    CREATED --> VALIDATING
+    VALIDATING --> REJECTED
+    VALIDATING --> APPROVED
+    APPROVED --> QUEUED
+    QUEUED --> RUNNING
+    RUNNING --> COMPLETED
+    RUNNING --> FAILED
+    RUNNING --> CANCELLING
+    CANCELLING --> CANCELLED
+    COMPLETED --> [*]
+    FAILED --> [*]
+    CANCELLED --> [*]
+    REJECTED --> [*]
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 10 & 11: API & DATABASE ARCHITECTURE -->
+      <!-- ========================================== -->
+      <section id="part-10" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 10 & 11</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">API & Database Architecture</h2>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-slate-800 bg-black/60">
+          <div class="mermaid">
+erDiagram
+    EXPERIMENTS ||--o{ PLANNER_REQUESTS : contains
+    EXPERIMENTS ||--o{ EXECUTION_RUNS : contains
+    PLANNER_REQUESTS ||--o{ EXECUTION_RUNS : initiates
+    EXECUTION_RUNS ||--o{ SIMULATION_EVENTS : produces
+    EXECUTION_RUNS ||--o{ OBSERVATIONS : generates
+    EXPERIMENTS ||--o{ AUDIT_LOGS : records
+    EXECUTION_RUNS ||--o{ AUDIT_LOGS : records
+    TARGETS ||--o{ PLANNER_REQUESTS : referenced_by
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg">
+            <span class="text-emerald-400 font-bold">POST</span> /experiments
+            <div class="text-slate-400 text-[11px] mt-0.5">Initialize a new experiment session</div>
+          </div>
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg">
+            <span class="text-emerald-400 font-bold">POST</span> /experiments/{id}/plan
+            <div class="text-slate-400 text-[11px] mt-0.5">Request AI plan for objective</div>
+          </div>
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg">
+            <span class="text-emerald-400 font-bold">POST</span> /experiments/{id}/execute
+            <div class="text-slate-400 text-[11px] mt-0.5">Submit validated plan to Safety Gateway</div>
+          </div>
+          <div class="p-3 bg-slate-900 border border-slate-800 rounded-lg">
+            <span class="text-rose-400 font-bold">POST</span> /runs/{id}/cancel
+            <div class="text-slate-400 text-[11px] mt-0.5">Trigger cooperative emergency kill switch</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 12: OBSERVATION & FEEDBACK LOOP -->
+      <!-- ========================================== -->
+      <section id="part-12" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 12</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Observation and Feedback Loop</h2>
+        </div>
+
+        <div class="p-6 rounded-2xl border border-slate-800 bg-black/60">
+          <div class="mermaid">
+flowchart TD
+    A[Adapter Result] --> B[Observation Engine]
+    B --> C[Metric Validation]
+    C --> D[Result Analyzer]
+    D --> E[Structured Observation]
+    E --> F[Context Manager]
+    F --> G[AI Planner]
+    G --> H{Next Decision}
+    H -->|Approved next step| I[New Validated Request]
+    H -->|Stop| J[Experiment Complete]
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl border border-cyan-500/30 bg-cyan-950/20 text-xs sm:text-sm text-slate-300">
+          <strong class="text-cyan-400 font-mono">Important Measurement Rule:</strong> The Observation Engine must strictly distinguish actual measurements, synthetic generated events (flagged <code>simulated: true</code>), derived metrics, and AI-generated interpretations. These categories are never blended.
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 13: FOLDER STRUCTURE -->
+      <!-- ========================================== -->
+      <section id="part-13" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 13</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Project Folder Structure</h2>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-800 bg-black/70 text-xs font-mono text-cyan-300 overflow-x-auto">
+<pre><code>CHAKRAVYUH/
+├── main.py                     # Entry point
+├── requirements.txt            # Python dependencies
+├── README.md                   # Documentation & Setup
+├── dashboard/
+│   ├── app.py                  # Streamlit application
+│   └── components/             # Reusable UI widgets
+├── backend/
+│   ├── api.py                  # Backend endpoints
+│   ├── session_manager.py      # Experiment sessions
+│   └── config.py               # Settings loader
+├── ai_engine/
+│   ├── planner.py              # Central AI Planner
+│   ├── decision_engine.py      # Stop / continue reasoning
+│   ├── context_manager.py      # Experiment context
+│   ├── llm_client.py           # Provider connector & fallback
+│   ├── prompt_templates.py     # Versioned prompts
+│   └── output_validator.py     # Schema enforcement
+├── security/
+│   ├── scope_guard.py          # Scope boundaries
+│   ├── policy.py               # Policies & caps
+│   ├── target_allowlist.py     # Authorized target store
+│   ├── rate_limiter.py         # Request rate enforcement
+│   └── kill_switch.py          # Emergency cancellation
+├── red_team/
+│   ├── base_adapter.py         # Abstract base adapter
+│   ├── dispatcher.py           # Scenario dispatcher
+│   └── adapters/
+│       ├── authentication.py   # Auth simulation adapter
+│       ├── service_load.py     # Bounded Locust adapter
+│       ├── phishing.py         # Awareness simulation adapter
+│       └── wireless.py         # Synthetic wireless adapter
+├── execution/
+│   ├── execution_engine.py     # Run lifecycle manager
+│   └── execution_state.py      # State machine
+├── observation/
+│   ├── observation_engine.py   # Result collector
+│   └── result_analyzer.py      # Metrics calculator
+├── common/
+│   ├── schemas.py              # Pydantic data schemas
+│   ├── event_schema.py         # Event telemetry schema
+│   └── exceptions.py           # Unified error taxonomy
+├── storage/
+│   ├── database.py             # SQLite manager
+│   ├── repositories.py         # Data access objects
+│   └── audit_logger.py         # Persistent audit log
+└── config/
+    ├── policies.json           # Safety ceilings
+    ├── targets.json            # Allowlisted lab targets
+    └── scenarios.json          # Approved scenario profiles</code></pre>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 14: IMPLEMENTATION ROADMAP -->
+      <!-- ========================================== -->
+      <section id="part-14" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 14</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">14-Phase Implementation Roadmap</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 1: Environment Setup</span>
+            <p class="text-slate-400 mt-1">Python, virtualenv, dependencies, Git initialization.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 2: Common Schemas</span>
+            <p class="text-slate-400 mt-1">Pydantic models for requests, runs, events, observations.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 3: Database & Audit Logging</span>
+            <p class="text-slate-400 mt-1">SQLite tables, repositories, immutable audit trail.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-rose-900/40 bg-rose-950/10 rounded-lg">
+            <span class="font-mono text-rose-400 font-bold">Phase 4: Safety Gateway</span>
+            <p class="text-slate-400 mt-1">Allowlist, policies, resource limits, kill switch.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 5: Base Adapter Interface</span>
+            <p class="text-slate-400 mt-1">Abstract lifecycle methods & cancellation tokens.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 6: Authentication Simulator</span>
+            <p class="text-slate-400 mt-1">Synthetic Windows Event telemetry generation.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 7: Service-Load Simulator</span>
+            <p class="text-slate-400 mt-1">Locust integration with strict duration caps.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 8: Phishing-Awareness Simulator</span>
+            <p class="text-slate-400 mt-1">Harmless mock workflows & synthetic inboxes.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 9: Wireless Synthetic Simulator</span>
+            <p class="text-slate-400 mt-1">Synthetic 802.11 frame event telemetry.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 10: Dispatcher & Execution Engine</span>
+            <p class="text-slate-400 mt-1">Run orchestration, timeouts, cleanup routines.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 11: AI Planner Integration</span>
+            <p class="text-slate-400 mt-1">LLM client, prompt templates, structured output validation.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 12: Observation & Feedback Loop</span>
+            <p class="text-slate-400 mt-1">Metric normalization, context updates, stop decision.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-slate-800 rounded-lg">
+            <span class="font-mono text-cyan-400 font-bold">Phase 13: Streamlit Dashboard</span>
+            <p class="text-slate-400 mt-1">Experiment management, live charts, emergency stop UI.</p>
+          </div>
+          <div class="p-3 bg-slate-900/60 border border-emerald-900/40 bg-emerald-950/10 rounded-lg">
+            <span class="font-mono text-emerald-400 font-bold">Phase 14: Integration & Final Testing</span>
+            <p class="text-slate-400 mt-1">End-to-end test suite, safety verification, demo replay.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 17: REALITY CHECK: WHAT IS ACTUALLY AI? -->
+      <!-- ========================================== -->
+      <section id="part-17" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 17</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Reality Check: What is Actually AI?</h2>
+        </div>
+
+        <p class="text-slate-300 text-sm leading-relaxed">
+          The project is genuinely AI-assisted because the LLM participates in planning and result interpretation. However, ordinary software performs validation, authorization, execution, measurement, and persistence.
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm border border-slate-800 rounded-lg overflow-hidden">
+            <thead class="bg-slate-900 font-mono text-cyan-400">
+              <tr>
+                <th class="p-3 border-b border-slate-800">Module</th>
+                <th class="p-3 border-b border-slate-800">Implementation</th>
+                <th class="p-3 border-b border-slate-800">What It Actually Proves</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-slate-300">
+              <tr>
+                <td class="p-3 font-semibold text-white">Authentication</td>
+                <td class="p-3">Synthetic events</td>
+                <td class="p-3">Event generation & SIEM pipeline ingestion validation</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">Service Load</td>
+                <td class="p-3">Bounded local workload (Locust)</td>
+                <td class="p-3">Actual response measurements from local service</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">Phishing</td>
+                <td class="p-3">Synthetic awareness workflow</td>
+                <td class="p-3">Mock educational content delivery & interaction tracking</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-white">Wireless</td>
+                <td class="p-3">Synthetic 802.11 events</td>
+                <td class="p-3">Wireless scenario telemetry representation & analysis</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 18: TECHNICAL REVIEWER QUESTIONS -->
+      <!-- ========================================== -->
+      <section id="part-18" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 18</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Technical Reviewer Questions (Q1 to Q15)</h2>
+        </div>
+
+        <div class="space-y-3" id="faqAccordion">
+          <!-- Q1 -->
+          <details class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 group">
+            <summary class="font-bold text-white text-sm cursor-pointer list-none flex items-center justify-between">
+              <span>Q1. Why use AI instead of fixed Python scripts?</span>
+              <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+              AI allows the system to interpret high-level testing objectives, select scenario profiles from catalogs, propose structured parameters, and analyze resulting telemetry. Python remains responsible for deterministic authorization, boundaries, and controlled execution.
+            </p>
+          </details>
+
+          <!-- Q2 -->
+          <details class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 group">
+            <summary class="font-bold text-white text-sm cursor-pointer list-none flex items-center justify-between">
+              <span>Q2. Why use one AI Planner instead of four separate agents?</span>
+              <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+              A centralized planner prevents duplication, guarantees unified security policy enforcement, maintains single-session context across modules, simplifies automated testing, and produces clean, comparable audit records.
+            </p>
+          </details>
+
+          <!-- Q3 -->
+          <details class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 group">
+            <summary class="font-bold text-white text-sm cursor-pointer list-none flex items-center justify-between">
+              <span>Q3. Can the AI directly execute commands?</span>
+              <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+              No. The AI produces structured JSON proposals. The deterministic Safety Gateway and Python execution engine independently validate and control what can run.
+            </p>
+          </details>
+
+          <!-- Q4 -->
+          <details class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 group">
+            <summary class="font-bold text-white text-sm cursor-pointer list-none flex items-center justify-between">
+              <span>Q4. How do you prevent unauthorized execution?</span>
+              <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+              Through hardcoded target allowlists, scenario permissions, parameter validation bounds, resource limits, and adapter-level safeguards.
+            </p>
+          </details>
+
+          <!-- Q5 -->
+          <details class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 group">
+            <summary class="font-bold text-white text-sm cursor-pointer list-none flex items-center justify-between">
+              <span>Q5. What happens if the AI generates invalid output?</span>
+              <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+              The Pydantic output validator rejects it immediately. It never reaches the execution layer.
+            </p>
+          </details>
+
+          <!-- Q6 -->
+          <details class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 group">
+            <summary class="font-bold text-white text-sm cursor-pointer list-none flex items-center justify-between">
+              <span>Q6. What happens if the LLM provider is unavailable?</span>
+              <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+              The application reports a provider failure gracefully. A deterministic local fallback planner is used only if explicitly configured and clearly labeled as a fallback.
+            </p>
+          </details>
+
+          <!-- Q7-Q10 -->
+          <details class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 group">
+            <summary class="font-bold text-white text-sm cursor-pointer list-none flex items-center justify-between">
+              <span>Q7 to Q10. Are the attacks genuine or synthetic?</span>
+              <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed space-y-1">
+              <p>• <strong>Authentication:</strong> Generates synthetic logon telemetry (Event 4625) without real brute-force credential stuffing.</p>
+              <p>• <strong>Service-Load:</strong> Bounded workload against an authorized local test service; not a distributed flooding attack.</p>
+              <p>• <strong>Phishing:</strong> Harmless awareness drills with synthetic recipients; credential collection is disabled.</p>
+              <p>• <strong>Wireless:</strong> Generates synthetic 802.11 management frames; no physical radio frequency emissions.</p>
+            </div>
+          </details>
+
+          <!-- Q11-Q15 -->
+          <details class="p-4 rounded-xl border border-slate-800 bg-slate-900/60 group">
+            <summary class="font-bold text-white text-sm cursor-pointer list-none flex items-center justify-between">
+              <span>Q11 to Q15. Monitoring, Auditing, SQLite, and Testing</span>
+              <span class="text-cyan-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+              Execution state is tracked cooperatively. All prompts, validation results, gateway approvals/rejections, and observations are logged in SQLite. The system is verified through unit, integration, safety, and end-to-end tests.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- PART 20: ACCEPTANCE CHECKLIST -->
+      <!-- ========================================== -->
+      <section id="checklist" class="space-y-6 pt-4 border-t border-slate-800">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800 text-xs font-mono">Part 20</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Interactive Acceptance Checklist</h2>
+          </div>
+          <div class="text-xs font-mono text-cyan-400 bg-slate-900 px-3 py-1 rounded border border-slate-800">
+            Progress: <span id="checklistProgress">0%</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="checklistContainer">
+          
+          <!-- Category 1 -->
+          <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/50 space-y-2">
+            <h4 class="font-bold text-cyan-300 font-mono text-xs uppercase tracking-wider">1. Foundation</h4>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Development environment configured</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Repository initialized with Git</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Dependencies documented in requirements.txt</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Laboratory network isolated</span>
+            </label>
+          </div>
+
+          <!-- Category 2 -->
+          <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/50 space-y-2">
+            <h4 class="font-bold text-indigo-300 font-mono text-xs uppercase tracking-wider">2. Architecture & Contracts</h4>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Common Pydantic schemas implemented</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>BaseAdapter contract implemented</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Database schema & SQLite repositories implemented</span>
+            </label>
+          </div>
+
+          <!-- Category 3 -->
+          <div class="p-4 rounded-xl border border-rose-900/50 bg-rose-950/20 space-y-2">
+            <h4 class="font-bold text-rose-300 font-mono text-xs uppercase tracking-wider">3. Safety Gateway</h4>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Target allowlist rejects unlisted hosts</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Parameter limits enforced (max events/duration)</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Emergency kill switch aborts running tasks</span>
+            </label>
+          </div>
+
+          <!-- Category 4 -->
+          <div class="p-4 rounded-xl border border-emerald-900/50 bg-emerald-950/20 space-y-2">
+            <h4 class="font-bold text-emerald-300 font-mono text-xs uppercase tracking-wider">4. 4 Simulation Adapters</h4>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Authentication Simulator works (synthetic=true)</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Service-Load Simulator works with Locust</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Phishing Simulator works (no credentials)</span>
+            </label>
+            <label class="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" onchange="updateChecklist()" class="rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-0">
+              <span>Wireless Simulator works (synthetic mode)</span>
+            </label>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="border-t border-slate-800 pt-8 pb-16 text-center text-xs text-slate-500 font-mono space-y-2">
+        <div>CHAKRAVYUH v4.0 Master Handbook & Architecture Explorer</div>
+        <div>Designed for Isolated Virtual Cybersecurity Laboratories • GitHub Pages Static Hosting Ready</div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- INTERACTIVE SCRIPTS -->
+  <script>
+    // Initialize Mermaid
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        darkMode: true,
+        background: '#090d16',
+        primaryColor: '#06b6d4',
+        primaryTextColor: '#f8fafc',
+        primaryBorderColor: '#0e7490',
+        lineColor: '#64748b',
+        secondaryColor: '#1e293b',
+        tertiaryColor: '#0f172a'
+      }
+    });
+
+    // Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scrollProgressBar').style.width = scrolled + '%';
+    });
+
+    // Live Simulator Pipeline Stages
+    const pipelineData = {
+      1: {
+        title: "Stage 1: User Testing Objective",
+        sub: "Operator inputs high-level goal in Streamlit",
+        html: `
+          <div class="space-y-2 text-xs font-mono">
+            <span class="text-cyan-400 font-bold">[OPERATOR INPUT]</span>
+            <div class="p-3 bg-slate-900 border border-slate-800 rounded text-slate-200">
+              "Run a controlled simulation of repeated Kerberos authentication failures against WINDOWS-LAB-01 to verify Windows Event 4625 detection alerts."
+            </div>
+            <div class="text-slate-400">Status: Experiment created (ID: EXP-2026-001). Dispatching prompt to AI Planner.</div>
+          </div>
+        `
+      },
+      2: {
+        title: "Stage 2: Centralized AI Planner Formulation",
+        sub: "LLM selects approved scenario & emits structured JSON proposal",
+        html: `
+          <div class="space-y-2 text-xs font-mono">
+            <span class="text-indigo-400 font-bold">[AI PLANNER PROPOSAL - VALIDATED SCHEMA]</span>
+            <pre class="p-3 bg-slate-900 border border-indigo-500/40 rounded text-emerald-300 overflow-x-auto">
+{
+  "request_id": "REQ-001",
+  "experiment_id": "EXP-2026-001",
+  "scenario": "authentication",
+  "profile": "controlled_failure_simulation",
+  "target_id": "WINDOWS-LAB-01",
+  "parameters": { "event_count": 20, "event_id_target": 4625 },
+  "reasoning_summary": "Selected synthetic authentication profile to emit Event 4625 records.",
+  "next_action": "execute"
+}</pre>
+          </div>
+        `
+      },
+      3: {
+        title: "Stage 3: Deterministic Safety Gateway Gatekeeper",
+        sub: "Deterministic policy checks before any adapter can be executed",
+        html: `
+          <div class="space-y-2 text-xs font-mono">
+            <span class="text-rose-400 font-bold">[SAFETY GATEWAY VERIFICATION PASS]</span>
+            <div class="p-3 bg-emerald-950/40 border border-emerald-500/50 rounded text-emerald-300 space-y-1">
+              <div>✓ Schema Validation: Pydantic constraints verified</div>
+              <div>✓ Target Allowlist Check: 'WINDOWS-LAB-01' is authorized (Host-Only Lab Target)</div>
+              <div>✓ Scenario Status: 'authentication' is ENABLED</div>
+              <div>✓ Parameter Ceilings: Event count 20 &lt;= 100 limit [PASS]</div>
+              <div class="font-bold text-white pt-1">DECISION: APPROVED ➔ Dispatching to ExecutionEngine.</div>
+            </div>
+          </div>
+        `
+      },
+      4: {
+        title: "Stage 4: Controlled Simulation Adapter Execution",
+        sub: "AuthenticationAdapter generates structured synthetic events with cancellation token",
+        html: `
+          <div class="space-y-2 text-xs font-mono">
+            <span class="text-emerald-400 font-bold">[ADAPTER TELEMETRY EMITTED]</span>
+            <pre class="p-3 bg-slate-900 border border-slate-800 rounded text-cyan-300 overflow-x-auto">
+{
+  "event_id": "EVT-AUTH-0042",
+  "experiment_id": "EXP-2026-001",
+  "run_id": "RUN-001",
+  "scenario": "authentication",
+  "timestamp": "2026-10-30T19:50:00Z",
+  "source": "SYNTHETIC-CLIENT",
+  "target": "WINDOWS-LAB-01",
+  "simulated": true,
+  "action": "authentication_failure",
+  "result": "failed",
+  "evidence_ref": "win-sec-4625-synthetic"
+}</pre>
+          </div>
+        `
+      },
+      5: {
+        title: "Stage 5: Observation Engine & Context Feedback",
+        sub: "Telemetry normalized into SQLite, observation evaluated by AI to recommend termination",
+        html: `
+          <div class="space-y-2 text-xs font-mono">
+            <span class="text-amber-400 font-bold">[OBSERVATION REPORT & AI EVALUATION]</span>
+            <div class="p-3 bg-slate-900 border border-amber-500/40 rounded space-y-1">
+              <div class="text-slate-200">Total Events: 20 | Simulated: true | Duration: 1.1s | Errors: 0</div>
+              <div class="text-purple-300 pt-1 font-semibold">AI Recommendation: "All 20 synthetic authentication failure records successfully ingested into SIEM test buffer. Experiment objective achieved. Status: STOP."</div>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    let curStep = 1;
+
+    function renderInteractiveStep() {
+      const data = pipelineData[curStep];
+      document.getElementById('simDisplayBox').innerHTML = `
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+          <h4 class="font-bold text-white text-sm">${data.title}</h4>
+          <span class="text-[11px] font-mono text-cyan-400">${data.sub}</span>
+        </div>
+        ${data.html}
+      `;
+
+      for (let i = 1; i <= 5; i++) {
+        const bar = document.getElementById(`sim-step-tab-${i}`);
+        if (i <= curStep) {
+          bar.className = 'h-2 rounded-full bg-cyan-500 transition-all';
+        } else {
+          bar.className = 'h-2 rounded-full bg-slate-800 transition-all';
+        }
+      }
+
+      document.getElementById('simStepLabel').innerText = `Step ${curStep} of 5`;
+      const btn = document.getElementById('simNextBtn');
+      btn.innerText = curStep === 5 ? 'Restart Flow ↺' : `Proceed to Step ${curStep + 1} ➔`;
+    }
+
+    function nextInteractiveStep() {
+      curStep = curStep >= 5 ? 1 : curStep + 1;
+      renderInteractiveStep();
+    }
+
+    function resetInteractivePipeline() {
+      curStep = 1;
+      renderInteractiveStep();
+    }
+
+    // Safety Gateway Tester
+    function testGatewayRule(scenario) {
+      const consoleEl = document.getElementById('gatewayConsole');
+      if (scenario === 'pass') {
+        consoleEl.innerHTML = `
+          <div class="text-emerald-400 font-bold">[GATEWAY APPROVED]</div>
+          <div class="text-slate-300">Target 'WINDOWS-LAB-01' is allowlisted. Event count 25 within policy ceiling (100). Request dispatched.</div>
+        `;
+      } else if (scenario === 'target_fail') {
+        consoleEl.innerHTML = `
+          <div class="text-rose-400 font-bold">[GATEWAY REJECTED: TARGET_NOT_ALLOWLISTED]</div>
+          <div class="text-slate-300">Target '142.250.190.46' is NOT in authorized lab target inventory. Execution blocked. Audit log AUD-REJ-101 created.</div>
+        `;
+      } else if (scenario === 'limit_fail') {
+        consoleEl.innerHTML = `
+          <div class="text-rose-400 font-bold">[GATEWAY REJECTED: RESOURCE_LIMIT_EXCEEDED]</div>
+          <div class="text-slate-300">Requested event_count 25,000 exceeds maximum safety ceiling (100). Execution refused.</div>
+        `;
+      }
+    }
+
+    // Interactive Checklist Tracker
+    function updateChecklist() {
+      const checkboxes = document.querySelectorAll('#checklistContainer input[type="checkbox"]');
+      let checked = 0;
+      checkboxes.forEach(c => { if (c.checked) checked++; });
+      const percent = Math.round((checked / checkboxes.length) * 100);
+      document.getElementById('checklistProgress').innerText = percent + '%';
+    }
+
+    // Search filter across page
+    document.getElementById('searchInput')?.addEventListener('input', function(e) {
+      const term = e.target.value.toLowerCase().trim();
+      if (!term) return;
+      const sections = document.querySelectorAll('main section');
+      for (const sec of sections) {
+        if (sec.innerText.toLowerCase().includes(term)) {
+          sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          break;
+        }
+      }
+    });
+
+    // Keyboard shortcut ⌘K / Ctrl+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('searchInput')?.focus();
+      }
+    });
+
+    // Initialize Simulator on load
+    renderInteractiveStep();
+  </script>
+</body>
+</html>
